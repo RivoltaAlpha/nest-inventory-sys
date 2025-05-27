@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
 
 export class CreateProductDto {
@@ -29,8 +30,11 @@ export class CreateProductDto {
     supplier_id: number;
     
     @IsDate()
+    @Type(() => Date)
     created_at: Date;
 
     @IsDate()
+    // apparently This ensures that ISO timestamp strings are correctly parsed as Date objects during validation and transformation.
+    @Type(() => Date)
     updated_at: Date;
 }
