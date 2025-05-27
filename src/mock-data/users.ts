@@ -1,0 +1,55 @@
+// Example mock data for users
+import { Role } from '../users/dto/create-user.dto';
+
+export const mockUsers = [
+  {
+    user_id: 1,
+    first_name: 'Alice',
+    last_name: 'Johnson',
+    email: 'alice.johnson@example.com',
+    password: 'Password123!',
+    role: Role.Admin,
+    created_at: new Date('2024-01-01T10:00:00Z'),
+    updated_at: new Date('2024-01-01T10:00:00Z'),
+  },
+  {
+    user_id: 2,
+    first_name: 'Bob',
+    last_name: 'Smith',
+    email: 'bob.smith@example.com',
+    password: 'Password123!',
+    role: Role.Manager,
+    created_at: new Date('2024-02-01T11:00:00Z'),
+    updated_at: new Date('2024-02-01T11:00:00Z'),
+  },
+  {
+    user_id: 3,
+    first_name: 'Carol',
+    last_name: 'Williams',
+    email: 'carol.williams@example.com',
+    password: 'Password123!',
+    role: Role.Warehouse,
+    created_at: new Date('2024-03-01T12:00:00Z'),
+    updated_at: new Date('2024-03-01T12:00:00Z'),
+  },
+  {
+    user_id: 4,
+    first_name: 'David',
+    last_name: 'Brown',
+    email: 'david.brown@example.com',
+    password: 'Password123!',
+    role: Role.Sales,
+    created_at: new Date('2024-04-01T13:00:00Z'),
+    updated_at: new Date('2024-04-01T13:00:00Z'),
+  },
+  {
+    user_id: 5,
+    first_name: 'Eve',
+    last_name: 'Davis',
+    email: 'eve.davis@example.com',
+    password: 'Password123!',
+    role: Role.Supplier,
+    created_at: new Date('2024-05-01T14:00:00Z'),
+    updated_at: new Date('2024-05-01T14:00:00Z'),
+  },
+];
