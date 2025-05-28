@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsDate, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsDate, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateInventoryDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     inventory_id: number;
 
