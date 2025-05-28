@@ -27,7 +27,7 @@ export class ProductsService {
     console.log(`This action returns a #${id} product`);
     return product;
   }
-  
+
   create(product: UpdateProductDto) {
     const lastId = this.products[this.products.length - 1].product_id;
 
@@ -43,21 +43,21 @@ export class ProductsService {
     }
 
     const newProd = {
-        product_id: lastId + 1,
-        name: product.name,
-        description: product.description,
-        sku: product.sku,
-        category_id: product.category_id,
-        supplier_id: product.supplier_id,
-        created_at: new Date(),
-        updated_at: new Date(),
-        price: product.price
-      };
+      product_id: lastId + 1,
+      name: product.name,
+      description: product.description,
+      sku: product.sku,
+      category_id: product.category_id,
+      supplier_id: product.supplier_id,
+      created_at: new Date(),
+      updated_at: new Date(),
+      price: product.price,
+    };
 
-      this.products.push(newProd);
-      console.log ('This action adds a new product');
-      return newProd;
-    }
+    this.products.push(newProd);
+    console.log('This action adds a new product');
+    return newProd;
+  }
 
   update(id: number, product: UpdateProductDto) {
     const index = this.products.findIndex((p) => p.product_id === id);
@@ -71,7 +71,7 @@ export class ProductsService {
         supplier_id: product.supplier_id ?? this.products[index].supplier_id,
         price: product.price ?? this.products[index].price,
         created_at: this.products[index].created_at,
-        updated_at: new Date()
+        updated_at: new Date(),
       };
       this.products[index] = updatedProduct;
       console.log(`This action updates a #${id} product`);
@@ -83,7 +83,7 @@ export class ProductsService {
 
   remove(id: number): string {
     const index = this.products.findIndex((c) => c.product_id === id);
-     if (index !== -1) {
+    if (index !== -1) {
       this.products.splice(index, 1);
       return `product with id ${id} deleted successfully`;
     }

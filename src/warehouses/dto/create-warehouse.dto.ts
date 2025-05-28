@@ -1,18 +1,24 @@
-import { IsNotEmpty, IsString, IsDate, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsDate,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateWarehouseDto {
-    @IsOptional()
-    @IsNumber()
-    warehouse_id: number;
+  @IsOptional()
+  @IsNumber()
+  warehouse_id: number;
 
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    location: string;
+  @IsNotEmpty()
+  @IsString()
+  location: string;
 
-    @IsDate()
-    created_at: Date;
+  @IsDate()
+  created_at: Date;
 }

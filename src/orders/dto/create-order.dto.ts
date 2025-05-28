@@ -1,33 +1,40 @@
-import { IsNotEmpty, IsString, IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsDate,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 // ENUM('Pending', 'Completed', 'Shipped', 'Returned')
 export enum OrderStatus {
-    Pending = 'Pending',
-    Completed = 'Completed',
-    Shipped = 'Shipped',
-    Returned = 'Returned',
+  Pending = 'Pending',
+  Completed = 'Completed',
+  Shipped = 'Shipped',
+  Returned = 'Returned',
 }
 
 export class CreateOrderDto {
-    @IsOptional()
-    @IsNumber()
-    order_id: number;
+  @IsOptional()
+  @IsNumber()
+  order_id: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    user_id: number;
+  @IsNotEmpty()
+  @IsNumber()
+  user_id: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    total_price: number;
+  @IsNotEmpty()
+  @IsNumber()
+  total_price: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @IsEnum(OrderStatus)
-    status: OrderStatus;
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
 
-    @IsDate()
-    created_at: Date;
+  @IsDate()
+  created_at: Date;
 
-    @IsDate()
-    updated_at: Date;
+  @IsDate()
+  updated_at: Date;
 }

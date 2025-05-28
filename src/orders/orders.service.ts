@@ -10,7 +10,7 @@ export class OrdersService {
     @InjectRepository(Order)
     private ordersRepository: Repository<Order>,
   ) {}
-  
+
   create(createOrderDto: CreateOrderDto) {
     const order = this.ordersRepository.create(createOrderDto);
     return this.ordersRepository.save(order);

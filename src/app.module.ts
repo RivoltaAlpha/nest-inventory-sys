@@ -14,11 +14,23 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, ProductsModule, SuppliersModule, CategoriesModule, OrdersModule, TransactionsModule, WarehousesModule, InventoriesModule, ShippingModule, PricingsModule, ReturnsModule, DatabaseModule,
-        ConfigModule.forRoot({
-      		isGlobal: true,
-      		envFilePath: '.env',
-   	 }),
+  imports: [
+    UsersModule,
+    ProductsModule,
+    SuppliersModule,
+    CategoriesModule,
+    OrdersModule,
+    TransactionsModule,
+    WarehousesModule,
+    InventoriesModule,
+    ShippingModule,
+    PricingsModule,
+    ReturnsModule,
+    DatabaseModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
   ],
   controllers: [],
   providers: [],

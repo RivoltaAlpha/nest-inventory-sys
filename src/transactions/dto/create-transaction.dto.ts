@@ -1,32 +1,38 @@
-import { IsNotEmpty, IsString, IsDate, IsEnum, IsNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsDate,
+  IsEnum,
+  IsNumber,
+} from 'class-validator';
 
 // ENUM('Sale', 'Purchase', 'Return', 'Adjustment')
 export enum TransactionType {
-    Sale = 'Sale',
-    Purchase = 'Purchase',
-    Return = 'Return',
-    Adjustment = 'Adjustment',
+  Sale = 'Sale',
+  Purchase = 'Purchase',
+  Return = 'Return',
+  Adjustment = 'Adjustment',
 }
 
 export class CreateTransactionDto {
-    @IsNotEmpty()
-    @IsNumber()
-    transaction_id: number;
+  @IsNotEmpty()
+  @IsNumber()
+  transaction_id: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    product_id: number;
+  @IsNotEmpty()
+  @IsNumber()
+  product_id: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    quantity: number;
+  @IsNotEmpty()
+  @IsNumber()
+  quantity: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @IsEnum(TransactionType)
-    type: TransactionType;
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(TransactionType)
+  type: TransactionType;
 
-    @IsNotEmpty()
-    @IsDate()
-    created_at: Date;
+  @IsNotEmpty()
+  @IsDate()
+  created_at: Date;
 }

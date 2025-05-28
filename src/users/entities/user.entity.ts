@@ -1,14 +1,14 @@
 import { Order } from 'src/orders/entities/order.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-  // ENUM('Admin', 'Manager', 'Warehouse', 'Sales', 'Supplier'
- export enum Role{
-    Admin = 'Admin',
-    Manager = 'Manager',
-    Warehouse = 'Warehouse',
-    Sales = 'Sales',
-    Supplier = 'Supplier'
-  }
+// ENUM('Admin', 'Manager', 'Warehouse', 'Sales', 'Supplier'
+export enum Role {
+  Admin = 'Admin',
+  Manager = 'Manager',
+  Warehouse = 'Warehouse',
+  Sales = 'Sales',
+  Supplier = 'Supplier',
+}
 
 @Entity()
 export class User {
@@ -45,5 +45,4 @@ export class User {
     onDelete: 'CASCADE',
   })
   orders: Order[];
-
 }

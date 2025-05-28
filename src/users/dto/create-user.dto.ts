@@ -1,13 +1,21 @@
-import { IsEmail, IsNotEmpty, IsString, IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsDate,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 
-  // ENUM('Admin', 'Manager', 'Warehouse', 'Sales', 'Supplier'
- export enum Role{
-    Admin = 'Admin',
-    Manager = 'Manager',
-    Warehouse = 'Warehouse',
-    Sales = 'Sales',
-    Supplier = 'Supplier'
-  }
+// ENUM('Admin', 'Manager', 'Warehouse', 'Sales', 'Supplier'
+export enum Role {
+  Admin = 'Admin',
+  Manager = 'Manager',
+  Warehouse = 'Warehouse',
+  Sales = 'Sales',
+  Supplier = 'Supplier',
+}
 export class CreateUserDto {
   @IsOptional()
   @IsNumber()
