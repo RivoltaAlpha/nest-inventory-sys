@@ -1,5 +1,6 @@
+import { Inventory } from "src/inventories/entities/inventory.entity";
 import { Product } from "src/products/entities/product.entity";
-import { Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export class Warehouse {
     @PrimaryGeneratedColumn()
@@ -16,4 +17,10 @@ export class Warehouse {
 
     @OneToMany(() => Product, (product) => product.warehouse_id)
     products: Product[];
+
+    @ManyToOne(() => Inventory, (inventory) => inventory.inventory_id, {
+            cascade: true,
+            onDelete: 'CASCADE',
+        })
+    inventory_id: Inventory;
 }
