@@ -10,9 +10,10 @@ import { InventoriesModule } from './inventories/inventories.module';
 import { ShippingModule } from './shipping/shipping.module';
 import { PricingsModule } from './pricings/pricings.module';
 import { ReturnsModule } from './returns/returns.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule, SuppliersModule, CategoriesModule, OrdersModule, TransactionsModule, WarehousesModule, InventoriesModule, ShippingModule, PricingsModule, ReturnsModule],
+  imports: [UsersModule, ProductsModule, SuppliersModule, CategoriesModule, OrdersModule, TransactionsModule, WarehousesModule, InventoriesModule, ShippingModule, PricingsModule, ReturnsModule, DatabaseModule],
   controllers: [],
   providers: [],
 })
