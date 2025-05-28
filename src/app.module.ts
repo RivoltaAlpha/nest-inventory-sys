@@ -11,9 +11,15 @@ import { ShippingModule } from './shipping/shipping.module';
 import { PricingsModule } from './pricings/pricings.module';
 import { ReturnsModule } from './returns/returns.module';
 import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, ProductsModule, SuppliersModule, CategoriesModule, OrdersModule, TransactionsModule, WarehousesModule, InventoriesModule, ShippingModule, PricingsModule, ReturnsModule, DatabaseModule],
+  imports: [UsersModule, ProductsModule, SuppliersModule, CategoriesModule, OrdersModule, TransactionsModule, WarehousesModule, InventoriesModule, ShippingModule, PricingsModule, ReturnsModule, DatabaseModule,
+        ConfigModule.forRoot({
+      		isGlobal: true,
+      		envFilePath: '.env',
+   	 }),
+  ],
   controllers: [],
   providers: [],
 })
