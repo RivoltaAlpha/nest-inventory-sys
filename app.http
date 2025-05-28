@@ -1,15 +1,5 @@
 ###
-@url = http://localhost:3000
-
-###
-PATCH {{url}}/books/update/3
-Content-Type: application/json
-
-{
-  "title": "Updated Book Name",
-  "description": "Updated book description.",
-  "author": "Updated Author Name"
-}
+@url = http://localhost:8000
 
 /// Product routes Worked 😎😎😎
 ###
@@ -46,3 +36,35 @@ Content-Type: application/json
 
 ###
 DELETE {{url}}/products/delete/5
+
+// user routes
+###
+GET {{url}}/users/all
+###
+GET {{url}}/users/1
+
+###
+POST {{url}}/users/create
+Content-Type: application/json
+
+{
+  "first_name": "Mwaniki",
+  "last_name": "Tiffany",
+  "email": "mwanikitiffany@gmail.com",
+  "password": "securepassword",
+  "role": "Admin"
+}
+
+###
+PATCH {{url}}/users/update/3
+Content-Type: application/json
+
+{
+  "first_name": "Updated First Name",
+  "last_name": "Updated Last Name",
+  "email": "updated.email@example.com",
+  "role": "Manager"
+}
+
+###
+DELETE {{url}}/users/delete/5
