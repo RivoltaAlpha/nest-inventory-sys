@@ -1,5 +1,6 @@
 import { Category } from "src/categories/entities/category.entity";
 import { Supplier } from "src/suppliers/entities/supplier.entity";
+import { Warehouse } from "src/warehouses/entities/warehouse.entity";
 import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export class Product {
@@ -40,4 +41,10 @@ export class Product {
         onDelete: 'CASCADE',
     })
     supplier_id: Supplier;
+
+    @ManyToOne(() => Warehouse, (warehouse) => warehouse.warehouse_id, {
+        cascade: true,
+        onDelete: 'CASCADE',
+    })
+    warehouse_id: Warehouse;
 }
