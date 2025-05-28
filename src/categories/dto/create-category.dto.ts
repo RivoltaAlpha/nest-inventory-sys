@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
-
+import { IsNotEmpty, IsString, IsDate, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateCategoryDto {
+    @IsOptional()
     @IsNumber()
     supplier_id: number;
     
