@@ -1,7 +1,8 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateProductDto {
+    @IsOptional()
     @IsNumber()
     product_id: number;
 
