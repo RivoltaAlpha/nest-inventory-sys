@@ -1,5 +1,6 @@
+import { Shipping } from 'src/shipping/entities/shipping.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 // ENUM('Pending', 'Completed', 'Shipped', 'Returned')
 export enum OrderStatus {
     Pending = 'Pending',
@@ -34,4 +35,11 @@ export class Order {
 
       @ManyToOne(() => User, (user) => user.orders)
       user: User;
+
+      @OneToOne(() => Shipping, (shipping) => shipping.shipping_id, {
+        eager: true,
+        cascade: true,
+      })
+      @JoinColumn()
+      shipping: Relation<Shipping>;
     }

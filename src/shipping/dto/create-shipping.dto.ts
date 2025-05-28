@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsDate, IsNumber, IsEnum, IsString } from 'class-validator';
+import { IsNotEmpty, IsDate, IsNumber, IsEnum, IsString, IsOptional } from 'class-validator';
 // ENUM('Pending', 'Shipped', 'Delivered', 'Cancelled')
 export enum ShippingStatus {
     Pending = 'Pending',
@@ -8,7 +8,7 @@ export enum ShippingStatus {
 };
 
 export class CreateShippingDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsNumber()
     shipping_id: number;
 
