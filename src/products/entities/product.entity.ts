@@ -1,8 +1,9 @@
 import { Category } from 'src/categories/entities/category.entity';
 import { Inventory } from 'src/inventories/entities/inventory.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export class Product {
   @PrimaryGeneratedColumn()
@@ -53,4 +54,9 @@ export class Product {
     onDelete: 'CASCADE',
   })
   inventory_id: Inventory;
+
+  @ManyToMany(() => Order)
+  @JoinTable()
+  orders: Order[];
+
 }

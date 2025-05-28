@@ -1,8 +1,11 @@
+import { Product } from 'src/products/entities/product.entity';
 import { Shipping } from 'src/shipping/entities/shipping.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -44,9 +47,16 @@ export class Order {
   user: User;
 
   @OneToOne(() => Shipping, (shipping) => shipping.shipping_id, {
-    eager: true,
     cascade: true,
+    onDelete: 'CASCADE',
   })
   @JoinColumn()
   shipping: Relation<Shipping>;
+
+  @ManyToMany(() => Product, (product) => product.orders, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinTable()
+  products: Product[];
 }
