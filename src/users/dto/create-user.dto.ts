@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, IsDate, IsEnum, IsNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
 
   // ENUM('Admin', 'Manager', 'Warehouse', 'Sales', 'Supplier'
  export enum Role{
@@ -9,7 +9,7 @@ import { IsEmail, IsNotEmpty, IsString, IsDate, IsEnum, IsNumber } from 'class-v
     Supplier = 'Supplier'
   }
 export class CreateUserDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   user_id: number;
 
@@ -29,13 +29,16 @@ export class CreateUserDto {
   @IsString()
   password: string;
 
+  @IsNotEmpty()
   @IsString()
   @IsEnum(Role)
   role: Role;
 
+  @IsOptional()
   @IsDate()
   created_at: Date;
 
+  @IsOptional()
   @IsDate()
   updated_at: Date;
 }
