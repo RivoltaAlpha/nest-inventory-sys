@@ -14,9 +14,6 @@ export class Category {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
-    @OneToMany(() => Product, (product) => product.category_id, {
-        cascade: true,
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => Product, (product) => product.category_id)
     products: Product[];
 }

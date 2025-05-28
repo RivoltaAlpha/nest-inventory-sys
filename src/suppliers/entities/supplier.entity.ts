@@ -21,9 +21,6 @@ export class Supplier {
     })
     updated_at: Date;
 
-    @OneToMany(() => Product, (product) => product.supplier_id, {
-        cascade: true,
-        onDelete: 'CASCADE',
-    })
+    @OneToMany(() => Product, (product) => product.supplier_id)
     products: Product[];
 }
