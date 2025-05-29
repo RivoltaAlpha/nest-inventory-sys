@@ -21,6 +21,6 @@ export class Supplier {
   })
   updated_at: Date;
 
-  @OneToMany(() => Product, (product) => product.supplier_id)
+  @OneToMany(() => Product, (product) => product.supplier)
   products: Product[];
 }
