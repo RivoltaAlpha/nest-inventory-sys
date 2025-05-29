@@ -1,4 +1,5 @@
 import { Product } from 'src/products/entities/product.entity';
+import { Return } from 'src/returns/entities/return.entity';
 import { Shipping } from 'src/shipping/entities/shipping.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -59,4 +60,7 @@ export class Order {
 
   @OneToMany(() => Shipping, (shipping) => shipping.order)
   ShippingRecord : Relation<Shipping>[];
+
+  @OneToOne(() => Return, (returnEntity) => returnEntity.order)
+  returnEntity: Return;
 }

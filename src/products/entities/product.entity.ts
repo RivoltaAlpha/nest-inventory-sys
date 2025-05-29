@@ -3,7 +3,8 @@ import { Inventory } from 'src/inventories/entities/inventory.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import { Order } from 'src/orders/entities/order.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Return } from 'src/returns/entities/return.entity';
 
 export class Product {
   @PrimaryGeneratedColumn()
@@ -35,13 +36,13 @@ export class Product {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  category_id: Category;
+  category: Category;
 
   @ManyToOne(() => Supplier, (supplier) => supplier.products, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  supplier_id: Supplier;
+  supplier: Supplier;
 
   @OneToMany(() => Inventory, (inventory) => inventory.product)
   inventories: Inventory[];
@@ -49,5 +50,8 @@ export class Product {
   @ManyToMany(() => Order, (order) => order.products)
   @JoinTable()
   orders: Relation<Order>[];
+
+  @OneToOne(() => Return, (returnEntity) => returnEntity.product)
+  returnEntity: Return;
 
 }
