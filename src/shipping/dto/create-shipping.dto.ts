@@ -24,8 +24,8 @@ export class CreateShippingDto {
   order_id: number;
 
   @IsNotEmpty()
-  @IsNumber()
-  tracking_number: number;
+  @IsString()
+  tracking_number: string;
 
   @IsNotEmpty()
   @IsString()

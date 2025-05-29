@@ -3,13 +3,13 @@ import { CreateShippingDto } from './dto/create-shipping.dto';
 import { UpdateShippingDto } from './dto/update-shipping.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Shipping } from './entities/shipping.entity';
-import { Relation } from 'typeorm';
+import { Relation, Repository } from 'typeorm';
 
 @Injectable()
 export class ShippingService {
   constructor(
     @InjectRepository(Shipping)
-    private shippingRepository: Relation<Shipping>,
+    private shippingRepository: Repository<Shipping>,
   ) {}
 
   create(createShippingDto: CreateShippingDto) {
@@ -22,7 +22,7 @@ export class ShippingService {
   }
 
   findOne(id: number) {
-    return this.shippingRepository.findOne(id);
+    return this.shippingRepository.findOne({ where: { shipping_id: id } });
   }
 
   update(id: number, updateShippingDto: UpdateShippingDto) {

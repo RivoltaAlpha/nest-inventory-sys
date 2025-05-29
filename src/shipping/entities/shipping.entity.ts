@@ -12,7 +12,7 @@ export class Shipping {
   @PrimaryGeneratedColumn()
   shipping_id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   tracking_number: string;
 
   @Column({
@@ -21,10 +21,10 @@ export class Shipping {
   })
   status: ShippingStatus;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   shipped_at: Date;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   created_at: Date;
 
   @OneToOne(() => Order, (order) => order.order_id)
