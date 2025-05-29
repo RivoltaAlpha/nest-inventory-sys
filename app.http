@@ -1,6 +1,10 @@
 ###
 @url = http://localhost:8000
 
+###
+POST {{url}}/seed
+
+
 /// Product routes Worked 😎😎😎
 ###
 GET {{url}}/products/all/
