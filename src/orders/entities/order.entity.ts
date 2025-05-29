@@ -4,6 +4,7 @@ import { Shipping } from 'src/shipping/entities/shipping.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
+  Entity,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -21,12 +22,13 @@ export enum OrderStatus {
   Returned = 'Returned',
 }
 
+@Entity()
 export class Order {
   @PrimaryGeneratedColumn()
   order_id: number;
 
-  @Column({ type: 'int' })
-  user_id: number;
+  // @Column({ type: 'int' })
+  // user_id: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total_price: number;
@@ -45,17 +47,16 @@ export class Order {
   updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.orders)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @OneToOne(() => Shipping, (shipping) => shipping.shipping_id, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
   shipping: Relation<Shipping>;
 
   @ManyToMany(() => Product, (product) => product.orders)
-  @JoinTable()
   products: Relation<Product>[];
 
   @OneToMany(() => Shipping, (shipping) => shipping.order)

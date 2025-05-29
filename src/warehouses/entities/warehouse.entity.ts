@@ -1,6 +1,7 @@
 import { Inventory } from 'src/inventories/entities/inventory.entity';
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Warehouse {
   @PrimaryGeneratedColumn()
   warehouse_id: number;

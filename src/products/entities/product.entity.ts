@@ -3,10 +3,11 @@ import { Inventory } from 'src/inventories/entities/inventory.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import { Order } from 'src/orders/entities/order.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 import { Return } from 'src/returns/entities/return.entity';
 import { Pricing } from 'src/pricings/entities/pricing.entity';
 
+@Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   product_id: number;
@@ -49,7 +50,7 @@ export class Product {
   inventories: Inventory[];
 
   @ManyToMany(() => Order, (order) => order.products)
-  @JoinTable()
+  @JoinColumn()
   orders: Relation<Order>[];
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)

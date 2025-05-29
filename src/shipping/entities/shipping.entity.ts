@@ -1,5 +1,5 @@
 import { Order } from 'src/orders/entities/order.entity';
-import { Column, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 export enum ShippingStatus {
   Pending = 'Pending',
@@ -8,6 +8,7 @@ export enum ShippingStatus {
   Cancelled = 'Cancelled',
 }
 
+@Entity()
 export class Shipping {
   @PrimaryGeneratedColumn()
   shipping_id: number;

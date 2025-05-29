@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum TransactionType {
   Sale = 'Sale',
@@ -6,6 +6,7 @@ export enum TransactionType {
   Return = 'Return',
   Adjustment = 'Adjustment',
 }
+@Entity()
 export class Transaction {
     @PrimaryGeneratedColumn()
     transaction_id: number;
