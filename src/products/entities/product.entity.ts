@@ -5,6 +5,7 @@ import { Order } from 'src/orders/entities/order.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
 import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
 import { Return } from 'src/returns/entities/return.entity';
+import { Pricing } from 'src/pricings/entities/pricing.entity';
 
 export class Product {
   @PrimaryGeneratedColumn()
@@ -53,5 +54,8 @@ export class Product {
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)
   returnEntity: Return;
+
+  @OneToOne(() => Pricing, (pricing) => pricing.product)
+  pricing: Pricing;
 
 }

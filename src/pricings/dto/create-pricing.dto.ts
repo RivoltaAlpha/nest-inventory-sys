@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsDate, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsDate, IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class CreatePricingDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   pricing_id: number;
 
