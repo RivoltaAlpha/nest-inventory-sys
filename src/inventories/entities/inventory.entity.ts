@@ -1,6 +1,6 @@
 import { Product } from 'src/products/entities/product.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export class Inventory {
   @PrimaryGeneratedColumn()
@@ -12,12 +12,20 @@ export class Inventory {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @OneToMany(() => Product, (product) => product.inventory_id)
-  products: Product[];
+  @ManyToOne(() => Product, (product) => product.inventories, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  product: Product;
 
-  @OneToMany(() => Warehouse, (warehouse) => warehouse.inventory_id)
-  warehouses: Warehouse[];
+  @ManyToOne(() => Warehouse, (warehouse) => warehouse.inventories, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  warehouse: Warehouse;
 
-  product_id: number;
-  warehouse_id: number;
+  // product_id: number;
+
+
+  // warehouse_id: number;
 }
