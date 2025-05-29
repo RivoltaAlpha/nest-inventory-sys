@@ -4,6 +4,7 @@ import {
   IsDate,
   IsEnum,
   IsNumber,
+  IsOptional,
 } from 'class-validator';
 
 // ENUM('Sale', 'Purchase', 'Return', 'Adjustment')
@@ -15,7 +16,7 @@ export enum TransactionType {
 }
 
 export class CreateTransactionDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   transaction_id: number;
 
@@ -26,6 +27,10 @@ export class CreateTransactionDto {
   @IsNotEmpty()
   @IsNumber()
   quantity: number;
+
+  @IsOptional()
+  @IsNumber()
+  price: number;
 
   @IsNotEmpty()
   @IsString()
