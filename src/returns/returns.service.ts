@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
 import { CreateReturnDto } from './dto/create-return.dto';
 import { UpdateReturnDto } from './dto/update-return.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Return } from './entities/return.entity';
 
 @Injectable()
 export class ReturnsService {
+  constructor(
+    @InjectRepository(Return)
+    private returnsRepository: Repository<Return>,
+  ) {}
+
   create(createReturnDto: CreateReturnDto) {
-    return 'This action adds a new return';
+    const newReturn = this.returnsRepository.create(createReturnDto);
+    return this.returnsRepository.save(newReturn);
   }
 
   findAll() {
-    return `This action returns all returns`;
+    return this.returnsRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} return`;
+    return this.returnsRepository.findOne({
+      where: { return_id: id as number },
+    });
   }
 
   update(id: number, updateReturnDto: UpdateReturnDto) {
-    return `This action updates a #${id} return`;
+    return this.returnsRepository.update(id, updateReturnDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} return`;
+    return this.returnsRepository.delete(id);
   }
 }
