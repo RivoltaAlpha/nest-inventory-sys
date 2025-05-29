@@ -16,7 +16,10 @@ export class ProductsService {
 
   findAll(): CreateProductDto[] {
     console.log('This action returns all products');
-    return this.products;
+    return this.products.map(product => ({
+      ...product,
+      sku: String(product.sku),
+    }));
   }
 
   findOne(id: number): CreateProductDto | undefined {
@@ -24,8 +27,11 @@ export class ProductsService {
     if (!product) {
       console.log('Product does not exist!');
     }
-    console.log(`This action returns a #${id} product`);
-    return product;
+    console.log(`This action returns a #${product?.product_id} product`);
+    if (product) {
+      return { ...product, sku: String(product.sku) };
+    }
+    return undefined;
   }
 
   create(product: UpdateProductDto) {
@@ -42,17 +48,17 @@ export class ProductsService {
       throw new Error('All product fields are required');
     }
 
-    const newProd = {
-      product_id: lastId + 1,
-      name: product.name,
-      description: product.description,
-      sku: product.sku,
-      category_id: product.category_id,
-      supplier_id: product.supplier_id,
-      created_at: new Date(),
-      updated_at: new Date(),
-      price: product.price,
-    };
+   const newProd = {
+  product_id: lastId + 1,
+  name: product.name,
+  description: product.description,
+  sku: Number(product.sku), // Convert to number
+  category_id: product.category_id,
+  supplier_id: product.supplier_id,
+  created_at: new Date(),
+  updated_at: new Date(),
+  price: product.price,
+};
 
     this.products.push(newProd);
     console.log('This action adds a new product');
@@ -66,7 +72,7 @@ export class ProductsService {
         product_id: id,
         name: product.name ?? this.products[index].name,
         description: product.description ?? this.products[index].description,
-        sku: product.sku ?? this.products[index].sku,
+        sku: product.sku !== undefined ? Number(product.sku) : this.products[index].sku,
         category_id: product.category_id ?? this.products[index].category_id,
         supplier_id: product.supplier_id ?? this.products[index].supplier_id,
         price: product.price ?? this.products[index].price,

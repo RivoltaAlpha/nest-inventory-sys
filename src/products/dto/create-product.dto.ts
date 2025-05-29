@@ -21,8 +21,8 @@ export class CreateProductDto {
   description: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  sku: number;
+  @IsString()
+  sku: string;
 
   @IsNotEmpty()
   @IsNumber()
