@@ -1,5 +1,5 @@
 import { Product } from "src/products/entities/product.entity";
-import { Column, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 export class Pricing {
     @PrimaryGeneratedColumn()
@@ -17,7 +17,7 @@ export class Pricing {
     @Column({ type: 'timestamp' })
     end_date: Date;
 
-    @OneToOne(() => Product, (product) => product.pricing, {
+    @ManyToOne(() => Product, (product) => product.PricingAdjustment, {
         cascade: true,
         onDelete: 'CASCADE',
     })

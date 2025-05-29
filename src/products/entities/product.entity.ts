@@ -55,7 +55,7 @@ export class Product {
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)
   returnEntity: Return;
 
-  @OneToOne(() => Pricing, (pricing) => pricing.product)
-  pricing: Pricing;
+  @OneToMany(() => Pricing, (PricingAdjustment) => PricingAdjustment.product)
+  PricingAdjustment: Pricing[];
 
 }
