@@ -57,6 +57,7 @@ export class Order {
   shipping: Relation<Shipping>;
 
   @ManyToMany(() => Product, (product) => product.orders)
+  @JoinTable()
   products: Relation<Product>[];
 
   @OneToMany(() => Shipping, (shipping) => shipping.order)

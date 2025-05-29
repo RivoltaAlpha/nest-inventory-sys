@@ -18,8 +18,8 @@ export class Product {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'int', unique: true })
-  sku: number;
+  @Column({ type: 'varchar', unique: true })
+  sku: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
@@ -50,7 +50,6 @@ export class Product {
   inventories: Inventory[];
 
   @ManyToMany(() => Order, (order) => order.products)
-  @JoinColumn()
   orders: Relation<Order>[];
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)
