@@ -1,7 +1,7 @@
 import { Category } from 'src/categories/entities/category.entity';
 import { Inventory } from 'src/inventories/entities/inventory.entity';
-import { Order } from 'src/orders/entities/order.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
 import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -31,32 +31,22 @@ export class Product {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => Category, (category) => category.category_id, {
+  @ManyToOne(() => Category, (category) => category.products, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   category_id: Category;
 
-  @ManyToOne(() => Supplier, (supplier) => supplier.supplier_id, {
+  @ManyToOne(() => Supplier, (supplier) => supplier.products, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   supplier_id: Supplier;
 
-  @ManyToOne(() => Warehouse, (warehouse) => warehouse.warehouse_id, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  warehouse_id: Warehouse;
+  @OneToMany(() => Inventory, (inventory) => inventory.product)
+  inventories: Inventory[];
 
-  @ManyToOne(() => Inventory, (inventory) => inventory.inventory_id, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  inventory_id: Inventory;
-
-  @ManyToMany(() => Order)
-  @JoinTable()
+  @ManyToMany(() => Order, (order) => order.products)
   orders: Order[];
 
 }
