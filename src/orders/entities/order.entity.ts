@@ -53,10 +53,7 @@ export class Order {
   @JoinColumn()
   shipping: Relation<Shipping>;
 
-  @ManyToMany(() => Product, (product) => product.orders, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
+  @ManyToMany(() => Product, (product) => product.orders)
   @JoinTable()
-  products: Product[];
+  products: Relation<Product>[];
 }

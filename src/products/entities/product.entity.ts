@@ -3,7 +3,7 @@ import { Inventory } from 'src/inventories/entities/inventory.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import { Order } from 'src/orders/entities/order.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 export class Product {
   @PrimaryGeneratedColumn()
@@ -47,6 +47,7 @@ export class Product {
   inventories: Inventory[];
 
   @ManyToMany(() => Order, (order) => order.products)
-  orders: Order[];
+  @JoinTable()
+  orders: Relation<Order>[];
 
 }
