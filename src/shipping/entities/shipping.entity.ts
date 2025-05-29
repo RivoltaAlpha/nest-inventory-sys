@@ -27,6 +27,6 @@ export class Shipping {
   @Column({ type: 'timestamp' })
   created_at: Date;
 
-  @OneToOne(() => Order, (order) => order.order_id)
+  @OneToOne(() => Order, (order) => order.shipping)
   order: Relation<Order>;
 }
