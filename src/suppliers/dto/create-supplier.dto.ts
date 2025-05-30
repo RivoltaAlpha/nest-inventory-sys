@@ -20,5 +20,6 @@ export class CreateSupplierDto {
   contact_info: string;
 
   @IsDate()
+  @IsOptional()
   created_at: Date;
 }
