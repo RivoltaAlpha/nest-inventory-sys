@@ -15,12 +15,12 @@ import { UpdateReturnDto } from './dto/update-return.dto';
 export class ReturnsController {
   constructor(private readonly returnsService: ReturnsService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createReturnDto: CreateReturnDto) {
     return this.returnsService.create(createReturnDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.returnsService.findAll();
   }
@@ -30,12 +30,12 @@ export class ReturnsController {
     return this.returnsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateReturnDto: UpdateReturnDto) {
     return this.returnsService.update(+id, updateReturnDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.returnsService.remove(+id);
   }

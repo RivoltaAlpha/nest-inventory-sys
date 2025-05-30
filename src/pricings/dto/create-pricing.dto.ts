@@ -18,10 +18,12 @@ export class CreatePricingDto {
   promotion: string;
 
   @IsNotEmpty()
+   @IsOptional()
   @IsDate()
   start_date: Date;
 
   @IsNotEmpty()
   @IsDate()
+  @IsOptional()
   end_date: Date;
 }

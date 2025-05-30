@@ -18,6 +18,7 @@ export class CreateInventoryDto {
   stock_qty: number;
 
   @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   created_at: Date;
 }

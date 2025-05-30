@@ -15,12 +15,12 @@ import { UpdateInventoryDto } from './dto/update-inventory.dto';
 export class InventoriesController {
   constructor(private readonly inventoriesService: InventoriesService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createInventoryDto: CreateInventoryDto) {
     return this.inventoriesService.create(createInventoryDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.inventoriesService.findAll();
   }
@@ -30,7 +30,7 @@ export class InventoriesController {
     return this.inventoriesService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(
     @Param('id') id: string,
     @Body() updateInventoryDto: UpdateInventoryDto,
@@ -38,7 +38,7 @@ export class InventoriesController {
     return this.inventoriesService.update(+id, updateInventoryDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.inventoriesService.remove(+id);
   }

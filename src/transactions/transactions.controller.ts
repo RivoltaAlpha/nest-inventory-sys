@@ -15,12 +15,12 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createTransactionDto: CreateTransactionDto) {
     return this.transactionsService.create(createTransactionDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.transactionsService.findAll();
   }
@@ -30,7 +30,7 @@ export class TransactionsController {
     return this.transactionsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
@@ -38,7 +38,7 @@ export class TransactionsController {
     return this.transactionsService.update(+id, updateTransactionDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.transactionsService.remove(+id);
   }

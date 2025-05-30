@@ -15,12 +15,12 @@ import { UpdatePricingDto } from './dto/update-pricing.dto';
 export class PricingsController {
   constructor(private readonly pricingsService: PricingsService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createPricingDto: CreatePricingDto) {
     return this.pricingsService.create(createPricingDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.pricingsService.findAll();
   }
@@ -30,12 +30,12 @@ export class PricingsController {
     return this.pricingsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updatePricingDto: UpdatePricingDto) {
     return this.pricingsService.update(+id, updatePricingDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.pricingsService.remove(+id);
   }

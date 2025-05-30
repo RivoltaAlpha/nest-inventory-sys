@@ -38,6 +38,7 @@ export class CreateTransactionDto {
   type: TransactionType;
 
   @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   created_at: Date;
 }
