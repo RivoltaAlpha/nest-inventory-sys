@@ -14,6 +14,7 @@ import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { SeedModule } from './seed/seed.module';
 import { LoggerMiddleware } from './logger.middleware';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { LoggerMiddleware } from './logger.middleware';
       envFilePath: '.env',
     }),
     SeedModule,
+    LogsModule,
   ],
   controllers: [],
   providers: [],
