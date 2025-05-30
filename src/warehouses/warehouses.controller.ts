@@ -15,12 +15,12 @@ import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 export class WarehousesController {
   constructor(private readonly warehousesService: WarehousesService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createWarehouseDto: CreateWarehouseDto) {
     return this.warehousesService.create(createWarehouseDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.warehousesService.findAll();
   }
@@ -30,7 +30,7 @@ export class WarehousesController {
     return this.warehousesService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(
     @Param('id') id: string,
     @Body() updateWarehouseDto: UpdateWarehouseDto,
@@ -38,7 +38,7 @@ export class WarehousesController {
     return this.warehousesService.update(+id, updateWarehouseDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.warehousesService.remove(+id);
   }

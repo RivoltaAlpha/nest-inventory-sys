@@ -20,5 +20,6 @@ export class CreateWarehouseDto {
   location: string;
 
   @IsDate()
+  @IsOptional()
   created_at: Date;
 }
