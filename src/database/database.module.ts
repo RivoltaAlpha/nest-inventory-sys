@@ -1,6 +1,25 @@
 import { Module } from '@nestjs/common';
+import { config } from 'dotenv';
+import { neon } from '@neondatabase/serverless';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
+
+// Load Environment Variables
+config({
+  path: ['.env', '.env.production', '.env.local'],
+});
+
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+  throw new Error('DATABASE_URL environment variable is not defined');
+}
+const sql = neon(databaseUrl);
+
+const dbProvider = {
+  provide: 'POSTGRES_POOL',
+  useValue: sql,
+};
 
 @Module({
   imports: [
@@ -20,6 +39,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         migrations: [__dirname + '/../migrations/**/*{.ts,.js}'],
       }),
       inject: [ConfigService], // Inject ConfigService to access configuration values
+  //       providers: [dbProvider],
+  // exports: [dbProvider],
     }),
   ],
 })
