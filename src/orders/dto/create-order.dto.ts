@@ -32,9 +32,11 @@ export class CreateOrderDto {
   @IsEnum(OrderStatus)
   status: OrderStatus;
 
+  @IsOptional()
   @IsDate()
   created_at: Date;
 
+  @IsOptional()
   @IsDate()
   updated_at: Date;
 }
