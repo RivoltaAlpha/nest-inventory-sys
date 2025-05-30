@@ -75,7 +75,7 @@ DELETE {{url}}/users/delete/5
 ###
 GET {{url}}/categories/all
 ###
-GET {{url}}/categories/1
+GET {{url}}/categories/16
 
 ###
 POST {{url}}/categories/create
@@ -83,12 +83,11 @@ Content-Type: application/json
 
 {
   "name": "Electronics",
-  "description": "Electronic gadgets and devices",
-  "createdAt": "2024-01-10T09:00:00.000Z"
+  "description": "Electronic gadgets and devices"
 }
 
 ###
-PATCH {{url}}/categories/update/1
+PATCH {{url}}/categories/update/21
 Content-Type: application/json
 
 {
