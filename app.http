@@ -8,7 +8,7 @@ POST {{url}}/seed
 ###
 GET {{url}}/products/all/
 ###
-GET {{url}}/products/1/
+GET {{url}}/products/64/
 
 ###
 POST {{url}}/products/create
@@ -18,7 +18,7 @@ Content-Type: application/json
   "product_id": 11,
   "name": "Wireless Mouse",
   "description": "Ergonomic wireless mouse with USB receiver",
-  "sku": 10001,
+  "sku": "10001",
   "price": 29.99,
   "category_id": 1,
   "supplier_id": 5,
@@ -27,11 +27,10 @@ Content-Type: application/json
 }
 
 ###
-PATCH {{url}}/products/update-product/3
+PATCH {{url}}/products/update/81
 Content-Type: application/json
 
 {
-  "id": 3,
   "name": "Updated Product Name",
   "description": "Updated product description.",
   "price": 19.99
