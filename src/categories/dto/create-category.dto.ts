@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
@@ -20,5 +21,7 @@ export class CreateCategoryDto {
   description: string;
 
   @IsDate()
+  @Type(() => Date)
+  @IsOptional()
   created_at: Date;
 }

@@ -37,11 +37,12 @@ export class CreateProductDto {
   supplier_id: number;
 
   @IsDate()
+  @IsOptional()
   @Type(() => Date)
   created_at: Date;
 
   @IsDate()
-  // apparently This ensures that ISO timestamp strings are correctly parsed as Date objects during validation and transformation.
+  @IsOptional()
   @Type(() => Date)
   updated_at: Date;
 }
