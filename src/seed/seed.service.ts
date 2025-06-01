@@ -74,7 +74,7 @@ export class SeedService {
             await queryRunner.startTransaction();
             try {
                 await queryRunner.query('DELETE FROM "order_products_product"');
-                await queryRunner.query('DELETE FROM "product_orders_order"');
+                // await queryRunner.query('DELETE FROM "product_orders_order"');
                 await queryRunner.query('DELETE FROM "category"');
                 await queryRunner.query('DELETE FROM "product"');
                 await queryRunner.query('DELETE FROM "supplier"');
