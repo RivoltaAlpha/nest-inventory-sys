@@ -1,6 +1,6 @@
 import { Product } from 'src/products/entities/product.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Inventory {
@@ -26,7 +26,6 @@ export class Inventory {
   warehouse: Warehouse;
 
   // product_id: number;
-
 
   // warehouse_id: number;
 }

@@ -18,7 +18,9 @@ export class ProductsService {
   }
 
   async findOne(id: number): Promise<Product | undefined> {
-    const product = await this.productsRepository.findOne({ where: { product_id: id } });
+    const product = await this.productsRepository.findOne({
+      where: { product_id: id },
+    });
     if (!product) {
       console.log('Product does not exist!');
       return undefined;
@@ -46,8 +48,13 @@ export class ProductsService {
     return this.productsRepository.save(newProduct);
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product | string> {
-    const product = await this.productsRepository.findOne({ where: { product_id: id } });
+  async update(
+    id: number,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product | string> {
+    const product = await this.productsRepository.findOne({
+      where: { product_id: id },
+    });
     if (!product) {
       return `product with id ${id} not found`;
     }

@@ -22,7 +22,7 @@ export class PricingsService {
 
   findOne(id: number) {
     return this.pricingRepository.findOne({
-      where: { pricing_id: id as number },
+      where: { pricing_id: id },
     });
   }
 

@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsDate, IsNumber, IsString, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDate,
+  IsNumber,
+  IsString,
+  IsOptional,
+} from 'class-validator';
 
 export class CreateReturnDto {
   @IsNotEmpty()

@@ -9,8 +9,10 @@ export class AppController {
     try {
       const html = await readFile('./index.html', 'utf-8');
       res.type('html').send(html);
-    } catch (err: any) {
-      res.status(500).send(err.message);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Internal Server Error';
+      res.status(500).send(message);
     }
   }
 }

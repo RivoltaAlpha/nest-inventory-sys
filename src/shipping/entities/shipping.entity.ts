@@ -1,5 +1,11 @@
 import { Order } from 'src/orders/entities/order.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+} from 'typeorm';
 
 export enum ShippingStatus {
   Pending = 'Pending',

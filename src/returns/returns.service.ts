@@ -23,7 +23,7 @@ export class ReturnsService {
 
   findOne(id: number) {
     return this.returnsRepository.findOne({
-      where: { return_id: id as number },
+      where: { return_id: id },
     });
   }
 

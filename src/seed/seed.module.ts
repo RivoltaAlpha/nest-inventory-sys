@@ -14,8 +14,21 @@ import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { User } from 'src/users/entities/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Category, Product, Supplier, Order, Inventory, Warehouse, Transaction, Return, Pricing])], // Add your entities here
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      Category,
+      Product,
+      Supplier,
+      Order,
+      Inventory,
+      Warehouse,
+      Transaction,
+      Return,
+      Pricing,
+    ]),
+  ], // Add your entities here
   providers: [SeedService],
-  controllers: [SeedController]
+  controllers: [SeedController],
 })
 export class SeedModule {}

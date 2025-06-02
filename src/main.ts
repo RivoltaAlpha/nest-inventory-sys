@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // detects DTO's and validates them globally
   app.useGlobalPipes(new ValidationPipe());
-  
+
   // // Global exception filter to handle all exceptions
   // app.useGlobalFilters(new AllExceptionsFilter());
 
@@ -24,6 +24,5 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
     allowedHeaders: 'Content-Type, Authorization', // Allowed headers
   });
-
 }
 bootstrap();

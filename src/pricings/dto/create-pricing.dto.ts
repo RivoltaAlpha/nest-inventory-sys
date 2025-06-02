@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsDate, IsNumber, IsString, IsOptional } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDate,
+  IsNumber,
+  IsString,
+  IsOptional,
+} from 'class-validator';
 
 export class CreatePricingDto {
   @IsOptional()
@@ -18,7 +24,7 @@ export class CreatePricingDto {
   promotion: string;
 
   @IsNotEmpty()
-   @IsOptional()
+  @IsOptional()
   @IsDate()
   start_date: Date;
 

@@ -61,7 +61,7 @@ export class Order {
   products: Relation<Product>[];
 
   @OneToMany(() => Shipping, (shipping) => shipping.order)
-  ShippingRecord : Relation<Shipping>[];
+  ShippingRecord: Relation<Shipping>[];
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.order)
   returnEntity: Return;

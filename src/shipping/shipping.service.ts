@@ -3,7 +3,7 @@ import { CreateShippingDto } from './dto/create-shipping.dto';
 import { UpdateShippingDto } from './dto/update-shipping.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Shipping } from './entities/shipping.entity';
-import { Relation, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ShippingService {

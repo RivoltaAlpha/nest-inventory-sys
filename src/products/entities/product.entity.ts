@@ -2,8 +2,16 @@ import { Category } from 'src/categories/entities/category.entity';
 import { Inventory } from 'src/inventories/entities/inventory.entity';
 import { Supplier } from 'src/suppliers/entities/supplier.entity';
 import { Order } from 'src/orders/entities/order.entity';
-import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  Relation,
+} from 'typeorm';
 import { Return } from 'src/returns/entities/return.entity';
 import { Pricing } from 'src/pricings/entities/pricing.entity';
 
@@ -57,5 +65,4 @@ export class Product {
 
   @OneToMany(() => Pricing, (PricingAdjustment) => PricingAdjustment.product)
   PricingAdjustment: Pricing[];
-
 }

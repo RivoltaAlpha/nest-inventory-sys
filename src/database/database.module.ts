@@ -4,7 +4,6 @@ import { neon } from '@neondatabase/serverless';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-
 // Load Environment Variables
 config({
   path: ['.env', '.env.production', '.env.local'],

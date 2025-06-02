@@ -21,7 +21,9 @@ export class TransactionsService {
   }
 
   findOne(id: number) {
-    return this.transactionsRepository.findOne({ where: { transaction_id: id } });
+    return this.transactionsRepository.findOne({
+      where: { transaction_id: id },
+    });
   }
 
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
