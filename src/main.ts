@@ -17,5 +17,13 @@ async function bootstrap() {
   await app.listen(PORT, () => {
     console.log(`Application is running on port: ${PORT}`);
   });
+
+  // get html file to be displayed on root
+  app.enableCors({
+    origin: '*', // Allow all origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
+    allowedHeaders: 'Content-Type, Authorization', // Allowed headers
+  });
+
 }
 bootstrap();

@@ -15,6 +15,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SeedModule } from './seed/seed.module';
 import { LoggerMiddleware } from './logger.middleware';
 import { LogsModule } from './logs/logs.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { LogsModule } from './logs/logs.module';
     SeedModule,
     LogsModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule implements NestModule {
