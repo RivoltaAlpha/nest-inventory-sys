@@ -41,6 +41,7 @@ import { createKeyv, Keyv } from '@keyv/redis';
               store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
             }),
           ],
+          logger: true, // Enable logging for cache operations for debug logging
         };
       },
     }),
@@ -103,3 +104,25 @@ networks:
 ```
 
 After this, create a database in Redis with a connection string as above.
+
+
+## Cache Implementation stategies
+### 1. Automatic Caching with Interceptors
+```
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+
+@Controller('products')
+@UseInterceptors(CacheInterceptor)
+export class ProductsController {
+  constructor(private readonly productsService: ProductsService) {}
+
+  @Get('all')
+  @CacheTTL(300) // Cache this endpoint for 5 minutes
+  findAll() {
+    return this.productsService.findAll();
+  }
+}
+```
+
+### 2. Manual Cache Operations
+Inject CACHE_MANAGER for custom cache operations:
