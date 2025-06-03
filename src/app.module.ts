@@ -11,11 +11,15 @@ import { ShippingModule } from './shipping/shipping.module';
 import { PricingsModule } from './pricings/pricings.module';
 import { ReturnsModule } from './returns/returns.module';
 import { DatabaseModule } from './database/database.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SeedModule } from './seed/seed.module';
 import { LoggerMiddleware } from './logger.middleware';
 import { LogsModule } from './logs/logs.module';
 import { AppController } from './app.controller';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { CacheableMemory} from 'cacheable';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { createKeyv, Keyv } from '@keyv/redis';
 
 @Module({
   imports: [
@@ -37,9 +41,32 @@ import { AppController } from './app.controller';
     }),
     SeedModule,
     LogsModule,
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      isGlobal: true, // Make cache globally available
+      useFactory: (configService: ConfigService) => {
+        return {
+          ttl: 60000, // Default TTL for cache entries
+          stores: [
+            createKeyv(configService.getOrThrow<string>('REDIS_URL')),
+
+            // Using CacheableMemory for in-memory caching
+            new Keyv({
+              store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
+            }),
+          ],
+        };
+      },
+    }),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: CacheInterceptor, // Global cache interceptor
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

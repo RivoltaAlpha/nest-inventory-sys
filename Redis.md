@@ -29,16 +29,20 @@ import { createKeyv, Keyv } from '@keyv/redis';
  CacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      isGlobal: true,
-      useFactory: (configService: ConfigService) => ({
-        stores: [
-          new Keyv({
-            store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
-          }),
+      isGlobal: true, // Make cache globally available
+      useFactory: (configService: ConfigService) => {
+        return {
+          ttl: 60000, // Default TTL for cache entries
+          stores: [
+            createKeyv(configService.getOrThrow<string>('REDIS_URL')),
 
-          createKeyv(configService.getOrThrow<string>('REDIS_URL') )
-        ],
-      }),
+            // Using CacheableMemory for in-memory caching
+            new Keyv({
+              store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
+            }),
+          ],
+        };
+      },
     }),
 ```
 
