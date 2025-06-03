@@ -4,7 +4,23 @@
 ### Cache Metrics
 GET {{url}}/cache-metrics
 
-### 
+### Cache Management
+POST {{url}}/cache
+Content-Type: application/json
+
+{
+  "key": "user_123",
+  "value": "John Doe Profile Data",
+  "ttl": 3600
+}
+
+### Cache Retrieval
+GET {{url}}/cache/user_123
+
+### Cache Deletion
+DELETE {{url}}/cache/some_key
+
+###
 POST {{url}}/seed
 
 /// Product routes
