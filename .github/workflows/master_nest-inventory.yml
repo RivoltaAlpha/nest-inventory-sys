@@ -26,7 +26,7 @@ jobs:
       - name: Clean install and build
         run: |
           rm -rf node_modules ./dist
-          npm ci
+          npm install
           npm run build --if-present
           npm run test --if-present -- --passWithNoTests
 
