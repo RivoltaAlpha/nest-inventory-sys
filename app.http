@@ -1,6 +1,9 @@
 ### 
 @url = http://localhost:8000
 
+### Cache Metrics
+GET {{url}}/cache-metrics
+
 ### 
 POST {{url}}/seed
 

@@ -18,8 +18,8 @@ import { LogsModule } from './logs/logs.module';
 import { AppController } from './app.controller';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { CacheableMemory} from 'cacheable';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { createKeyv, Keyv } from '@keyv/redis';
+import { CacheMetricsController } from './cache/metrics.controller';
 
 @Module({
   imports: [
@@ -35,6 +35,7 @@ import { createKeyv, Keyv } from '@keyv/redis';
     PricingsModule,
     ReturnsModule,
     DatabaseModule,
+    
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -56,11 +57,12 @@ import { createKeyv, Keyv } from '@keyv/redis';
               store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
             }),
           ],
+          logger: true, // Enable logging for cache operations
         };
       },
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, CacheMetricsController],
   providers: [
     {
       provide: 'APP_INTERCEPTOR',
