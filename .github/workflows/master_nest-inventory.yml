@@ -23,14 +23,21 @@ jobs:
         with:
           node-version: '22.x'
 
-      - name: npm install, build, and test
+      - name: Clean install and build
         run: |
-          npm install
+          rm -rf node_modules ./dist
+          npm ci
           npm run build --if-present
           npm run test --if-present -- --passWithNoTests
 
+      # Remove node_modules so it does not get zipped/deployed
+      - name: Cleanup node_modules before packaging
+        run: rm -rf node_modules
+
+      # Zip everything except node_modules, .git, test, coverage, etc.
       - name: Zip artifact for deployment
-        run: zip -r release.zip dist/ package.json package-lock.json
+        run: |
+          zip -r release.zip . -x "node_modules/*" -x ".git/*" -x "test/*" -x "coverage/*" -x "*.log"
 
       - name: Validate artifact contents
         run: unzip -l release.zip
