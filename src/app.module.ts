@@ -20,6 +20,7 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { CacheableMemory} from 'cacheable';
 import { createKeyv, Keyv } from '@keyv/redis';
 import { CacheMetricsController } from './cache/metrics.controller';
+import { CachemanagerModule } from './cachemanager/cachemanager.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { CacheMetricsController } from './cache/metrics.controller';
         };
       },
     }),
+    CachemanagerModule,
   ],
   controllers: [AppController, CacheMetricsController],
   providers: [
