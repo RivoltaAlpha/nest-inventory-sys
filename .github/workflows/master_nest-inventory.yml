@@ -37,7 +37,7 @@ jobs:
       # Zip everything except node_modules, .git, test, coverage, etc.
       - name: Zip artifact for deployment
         run: |
-          zip -r release.zip dist/ package.json package-lock.json
+          zip -r release.zip dist/ package.json package-lock.json . -x "node_modules/*" -x ".git/*" -x "test/*" -x "coverage/*" -x "*.log"
 
       - name: Validate artifact contents
         run: unzip -l release.zip
