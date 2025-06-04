@@ -23,10 +23,14 @@ jobs:
         with:
           node-version: '20.x'
 
-  # Remove node_modules so it does not get zipped/deployed
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
       - name: Cleanup node_modules before packaging
         run: rm -rf node_modules
-
       # Zip everything except node_modules, .git, test, coverage, etc.
       - name: Zip artifact for deployment
         run: |
@@ -73,5 +77,5 @@ jobs:
         with:
           app-name: 'redeployedinventory'
           slot-name: 'Production'
-          package: .
+          package: release.zip
           
