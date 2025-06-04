@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -17,39 +18,48 @@ export enum Role {
   Supplier = 'Supplier',
 }
 export class CreateUserDto {
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   user_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   first_name: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   last_name: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   password: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @IsEnum(Role)
   role: Role;
 
+    @ApiProperty()
   @IsOptional()
   @IsString()
   hashedRefreshToken?: string;
 
+    @ApiProperty()
   @IsOptional()
   @IsDate()
   created_at: Date;
 
+    @ApiProperty()
   @IsOptional()
   @IsDate()
   updated_at: Date;
