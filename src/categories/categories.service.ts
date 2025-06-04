@@ -21,14 +21,26 @@ export class CategoriesService {
   }
 
   findOne(id: number) {
-    return this.categoriesRepository.findOneBy({ category_id: id });
+    try {
+      return this.categoriesRepository.findOneBy({ category_id: id });
+    } catch (error) {
+      throw new Error(`Category with id ${id} not found`);
+    }
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return this.categoriesRepository.update(id, updateCategoryDto);
+    try {
+      return this.categoriesRepository.update(id, updateCategoryDto);
+    } catch (error) {
+      throw new Error(`Error updating category with id ${id}`);
+    }
   }
 
   remove(id: number) {
-    return this.categoriesRepository.delete(id);
+    try {
+      return this.categoriesRepository.delete(id);
+    } catch (error) {
+      throw new Error(`Error removing category with id ${id}`);
+    }
   }
 }
