@@ -30,6 +30,9 @@ export class User {
   @Column({ type: 'enum', enum: Role })
   role: Role;
 
+  @Column({ type: 'varchar', length: 255 })
+  hashedRefreshToken: string;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

@@ -43,6 +43,10 @@ export class CreateUserDto {
   role: Role;
 
   @IsOptional()
+  @IsString()
+  hashedRefreshToken: string;
+
+  @IsOptional()
   @IsDate()
   created_at: Date;
 
