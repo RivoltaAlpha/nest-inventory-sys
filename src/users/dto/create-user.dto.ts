@@ -44,7 +44,7 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
-  hashedRefreshToken: string;
+  hashedRefreshToken?: string;
 
   @IsOptional()
   @IsDate()
