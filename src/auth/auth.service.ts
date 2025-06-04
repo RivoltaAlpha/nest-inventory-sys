@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -76,20 +76,27 @@ export class AuthService {
     if (existingUser) {
       throw new Error('User already exists');
     }
-    
-    // create new user
     // hash password
     const hashedPassword = await bcrypt.hash(createAuthDto.password, 10);
 
-    // save new user
+    // create and save new user
     const user = this.userRepository.create({
       ...createAuthDto,
       password: hashedPassword,
     });
     // generate tokens
-    const { accessToken, refreshToken } = await this.generateTokens(user.user_id, user.email);
     const savedUser = await this.userRepository.save(user);
-    return { user: savedUser, accessToken, refreshToken };
+    const { accessToken, refreshToken } = await this.generateTokens(savedUser.user_id, savedUser.email);
+
+    // Save refresh token in the database
+    await this.saveRefreshToken(savedUser.user_id, refreshToken);
+
+    // Return user and tokens
+  // Fetch updated user (with hashedRefreshToken)
+    const updatedUser = await this.userRepository.findOne({
+      where: { user_id: savedUser.user_id },
+    });
+    return { user: updatedUser, accessToken, refreshToken };
   }
 
   async SignIn(createAuthDto: CreateAuthDto) {
@@ -102,12 +109,14 @@ export class AuthService {
     }
 
     // Check password
+    // console.log('Password:', createAuthDto.password);
+    // console.log('Found password:', foundUser.password);
     const foundPassword = await bcrypt.compare(
       createAuthDto.password,
       foundUser.password, // Assuming password is stored in the user entity
     );
     if (!foundPassword) {
-      throw new NotFoundException('Invalid password');
+      throw new UnauthorizedException('Invalid password');
     }
 
     // Generate tokens
@@ -123,10 +132,10 @@ export class AuthService {
     return { foundUser, accessToken, refreshToken };
   }
   
-  async signOut(userId: string) {
+  async signOut(userId: number) {
     // set user refresh token to null
     const res = await this.userRepository.update(userId, {
-      hashedRefreshToken: undefined,
+      hashedRefreshToken: null,
     });
 
     if (res.affected === 0) {
