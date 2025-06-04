@@ -1,6 +1,7 @@
 ### 
 @url = http://localhost:8000
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyLCJlbWFpbCI6InJpdWtpc3RldmVAZ21haWwuY29tIiwiaWF0IjoxNzQ5MDY0MjY4LCJleHAiOjE3NDkwNjYwNjh9.6SGhdsndM0JaICcamFiX0-88-LX9XxCBmEbfXGblHss
+@refreshToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyLCJlbWFpbCI6InJpdWtpc3RldmVAZ21haWwuY29tIiwiaWF0IjoxNzQ5MDY0MjY4LCJleHAiOjE3NDk2NjkwNjh9.UXBaNCOpPbhZlXuL8mt3vijoGLNGLWEV3rWMmFQSJdg
 ### Cache Metrics
 GET {{url}}/cache-metrics
 
@@ -13,12 +14,45 @@ Content-Type: application/json
   "value": "John Doe Profile Data",
   "ttl": 3600
 }
+### login a new user 
+POST {{url}}/auth/signin
+Content-Type: application/json
 
-### Cache Retrieval
-GET {{url}}/cache/user_123
+{
+  "email": "riukisteve@gmail.com",
+  "password": "securepassword"
+}
 
-### Cache Deletion
-DELETE {{url}}/cache/some_key
+### Logout
+POST {{url}}/auth/signout/12
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": 12
+}
+
+### Refresh Tokens
+POST {{url}}/auth/refresh/12
+Authorization: Bearer {{refreshToken}}
+Content-Type: application/json
+
+{
+  "userId": 12,
+  "refreshToken": "{{refreshToken}}"
+}
+
+###
+POST {{url}}/auth/signup
+Content-Type: application/json
+
+{
+  "first_name": "Kimberly",
+  "last_name": "Njeri",
+  "email": "kimjay@gmail.com",
+  "password": "securepassword",
+  "role": "Sales"
+}
 
 ###
 POST {{url}}/seed
@@ -27,7 +61,7 @@ POST {{url}}/seed
 ###
 GET {{url}}/products/all/
 ###
-GET {{url}}/products/64/
+GET {{url}}/products/6/
 
 ###
 POST {{url}}/products/create
@@ -94,7 +128,7 @@ DELETE {{url}}/users/delete/5
 ###
 GET {{url}}/categories/all
 ###
-GET {{url}}/categories/16
+GET {{url}}/categories/9
 
 ###
 POST {{url}}/categories/create
@@ -106,7 +140,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH {{url}}/categories/update/21
+PATCH {{url}}/categories/update/6
 Content-Type: application/json
 
 {
