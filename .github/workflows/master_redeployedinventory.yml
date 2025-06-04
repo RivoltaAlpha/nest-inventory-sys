@@ -27,14 +27,14 @@ jobs:
         run: npm install 
 
       - name: Build project
-        run: npm run build
+        run: npm run build --if-present
 
-      - name: Cleanup node_modules before packaging
-        run: rm -rf node_modules
+      - name: run tests
+        run: npm run test --if-present -- --passWithNoTests
+        
       # Zip everything except node_modules, .git, test, coverage, etc.
       - name: Zip artifact for deployment
-        run: |
-          zip -r release.zip dist/ package.json package-lock.json
+        run: zip -r release.zip dist/ node_modules/ package.json package-lock.json
 
       - name: Validate artifact contents
         run: unzip -l release.zip
@@ -77,5 +77,5 @@ jobs:
         with:
           app-name: 'redeployedinventory'
           slot-name: 'Production'
-          package: .
+          package: release.zip
           
