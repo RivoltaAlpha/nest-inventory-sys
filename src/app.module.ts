@@ -74,10 +74,10 @@ import { AtGuard } from './auth/guards/at.guards';
       provide: 'APP_INTERCEPTOR',
       useClass: CacheInterceptor, // Global cache interceptor
     },
-    {
-      provide: APP_GUARD,
-      useClass: AtGuard, // Global access token guard
-    }
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AtGuard, // Global access token guard
+    // }
   ],
 })
 export class AppModule implements NestModule {
