@@ -21,6 +21,9 @@ import { CacheableMemory} from 'cacheable';
 import { createKeyv, Keyv } from '@keyv/redis';
 import { CacheMetricsController } from './cache/metrics.controller';
 import { CachemanagerModule } from './cachemanager/cachemanager.module';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AtGuard } from './auth/guards/at.guards';
 
 @Module({
   imports: [
@@ -63,12 +66,17 @@ import { CachemanagerModule } from './cachemanager/cachemanager.module';
       },
     }),
     CachemanagerModule,
+    AuthModule,
   ],
   controllers: [AppController, CacheMetricsController],
   providers: [
     {
       provide: 'APP_INTERCEPTOR',
       useClass: CacheInterceptor, // Global cache interceptor
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard, // Global access token guard
     }
   ],
 })
