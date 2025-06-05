@@ -18,12 +18,11 @@ import { LogsModule } from './logs/logs.module';
 import { AppController } from './app.controller';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { AuthModule } from './auth/auth.module';
-// import { CacheableMemory} from 'cacheable';
-// import { createKeyv, Keyv } from '@keyv/redis';
-// import { CacheMetricsController } from './cache/metrics.controller';
-// import { CachemanagerModule } from './cachemanager/cachemanager.module';
-// import { APP_GUARD } from '@nestjs/core';
-// import { AtGuard } from './auth/guards/at.guards';
+import { CacheableMemory} from 'cacheable';
+import { createKeyv, Keyv } from '@keyv/redis';
+import { CacheMetricsController } from './cache/metrics.controller';
+import { APP_GUARD } from '@nestjs/core';
+import { AtGuard } from './auth/guards/at.guards';
 
 @Module({
   imports: [
@@ -47,38 +46,37 @@ import { AuthModule } from './auth/auth.module';
     SeedModule,
     LogsModule,
     AuthModule,
-    // CacheModule.registerAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   isGlobal: true, // Make cache globally available
-    //   useFactory: (configService: ConfigService) => {
-    //     return {
-    //       ttl: 60000, // Default TTL for cache entries
-    //       stores: [
-    //         createKeyv(configService.getOrThrow<string>('REDIS_URL')),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      isGlobal: true, // Make cache globally available
+      useFactory: (configService: ConfigService) => {
+        return {
+          ttl: 60000, // Default TTL for cache entries
+          stores: [
+            createKeyv(configService.getOrThrow<string>('REDIS_URL')),
 
-    //         // Using CacheableMemory for in-memory caching
-    //         new Keyv({
-    //           store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
-    //         }),
-    //       ],
-    //       logger: true, // Enable logging for cache operations
-    //     };
-    //   },
-    // }),
-    // CachemanagerModule,
+            // Using CacheableMemory for in-memory caching
+            new Keyv({
+              store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
+            }),
+          ],
+          logger: true, // Enable logging for cache operations
+        };
+      },
+    }),
   ],
-  // controllers: [AppController, CacheMetricsController],
-  controllers: [AppController],
+  controllers: [AppController, CacheMetricsController],
+  // controllers: [AppController],
   providers: [
-    // {
-    //   provide: 'APP_INTERCEPTOR',
-    //   useClass: CacheInterceptor, // Global cache interceptor
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AtGuard, // Global access token guard
-    // }
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: CacheInterceptor, // Global cache interceptor
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard, // Global access token guard
+    }
   ],
 })
 export class AppModule implements NestModule {
