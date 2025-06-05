@@ -6,15 +6,15 @@ import {
   Patch,
   Param,
   Delete,
-  // UseInterceptors,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-// import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('products')
-// @UseInterceptors(CacheInterceptor)
+@UseInterceptors(CacheInterceptor)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
@@ -24,7 +24,8 @@ export class ProductsController {
   }
 
   @Get('all')
-  // @CacheTTL(300) // Cache this endpoint for 5 minutes
+  // Cache this endpoint for 5 minutes
+  @CacheTTL(50000)
   findAll() {
     return this.productsService.findAll();
   }

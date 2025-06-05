@@ -18,6 +18,17 @@ async function bootstrap() {
   .setTitle('Inventory API')
   .setDescription('API documentation for the Inventory Management System')
   .setVersion('1.0')
+  .addBearerAuth(
+    {
+      type: 'http',
+      scheme: 'Bearer',
+      bearerFormat: 'JWT',
+      name: 'Authorization',
+      description: 'Enter JWT token',
+      in: 'header',
+    },
+    'access-token', 
+  )
   .build();
 
   const document = SwaggerModule.createDocument(app, config);

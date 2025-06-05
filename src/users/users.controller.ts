@@ -11,7 +11,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth('access-token') // This indicates that the endpoints require authentication
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
