@@ -17,12 +17,12 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 export class ShippingController {
   constructor(private readonly shippingService: ShippingService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createShippingDto: CreateShippingDto) {
     return this.shippingService.create(createShippingDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.shippingService.findAll();
   }
@@ -32,7 +32,7 @@ export class ShippingController {
     return this.shippingService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(
     @Param('id') id: string,
     @Body() updateShippingDto: UpdateShippingDto,
@@ -40,7 +40,7 @@ export class ShippingController {
     return this.shippingService.update(+id, updateShippingDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
     return this.shippingService.remove(+id);
   }
