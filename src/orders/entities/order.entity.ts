@@ -50,18 +50,15 @@ export class Order {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToOne(() => Shipping, (shipping) => shipping.shipping_id, {
+  @OneToOne(() => Shipping, (shipping) => shipping.order, {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  shipping: Relation<Shipping>;
+  shipping: Relation<Shipping[]>;
 
   @ManyToMany(() => Product, (product) => product.orders)
   @JoinTable()
-  products: Relation<Product>[];
-
-  @OneToMany(() => Shipping, (shipping) => shipping.order)
-  ShippingRecord: Relation<Shipping>[];
+  products: Relation<Product[]>;
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.order)
   returnEntity: Return;

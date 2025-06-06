@@ -39,4 +39,8 @@ export class CreateOrderDto {
   @IsOptional()
   @IsDate()
   updated_at: Date;
+
+    @IsNotEmpty()
+  @IsOptional()
+  products: { product_id: number }[];
 }
