@@ -2,6 +2,7 @@ import { Order } from 'src/orders/entities/order.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
   Relation,
@@ -35,5 +36,6 @@ export class Shipping {
   created_at: Date;
 
   @OneToOne(() => Order, (order) => order.shipping)
+  @JoinColumn({ name: 'order_id' })
   order: Relation<Order>;
 }

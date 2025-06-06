@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsDate,
@@ -33,10 +34,12 @@ export class CreateShippingDto {
   status: ShippingStatus;
 
   @IsNotEmpty()
+  @Type(() => Date)
   @IsDate()
   shipped_at: Date;
 
-  @IsNotEmpty()
+  @IsOptional()
+  @Type(() => Date)
   @IsDate()
   created_at: Date;
 }
