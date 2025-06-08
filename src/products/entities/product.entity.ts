@@ -5,6 +5,7 @@ import { Order } from 'src/orders/entities/order.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -35,34 +36,34 @@ export class Product {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 
+  // holds the category_id as a foreign key
   @ManyToOne(() => Category, (category) => category.products, {
     cascade: true,
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'category_id' })
   category: Category;
 
+  // holds the supplier_id as a foreign key
   @ManyToOne(() => Supplier, (supplier) => supplier.products, {
     cascade: true,
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;
 
   @OneToMany(() => Inventory, (inventory) => inventory.product)
   inventories: Inventory[];
-
-  @ManyToMany(() => Order, (order) => order.products)
-  orders: Relation<Order>[];
-
+  
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)
   returnEntity: Return;
-
+  
   @OneToMany(() => Pricing, (PricingAdjustment) => PricingAdjustment.product)
   PricingAdjustment: Pricing[];
+  
+  @ManyToMany(() => Order, (order) => order.products)
+  orders: Relation<Order>[];
 }

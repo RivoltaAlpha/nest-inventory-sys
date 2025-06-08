@@ -1,5 +1,5 @@
 import { Product } from 'src/products/entities/product.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Pricing {
   @PrimaryGeneratedColumn()
@@ -21,5 +21,6 @@ export class Pricing {
     cascade: true,
     onDelete: 'CASCADE',
   })
+@JoinColumn({ name: 'product_id' })
   product: Product;
 }
