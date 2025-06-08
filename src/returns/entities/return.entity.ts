@@ -1,6 +1,12 @@
 import { Order } from 'src/orders/entities/order.entity';
 import { Product } from 'src/products/entities/product.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Return {
@@ -29,5 +35,4 @@ export class Return {
   })
   @JoinColumn({ name: 'product_id' })
   product: Product;
-
 }

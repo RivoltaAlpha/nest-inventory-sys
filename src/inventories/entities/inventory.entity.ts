@@ -1,6 +1,12 @@
 import { Product } from 'src/products/entities/product.entity';
 import { Warehouse } from 'src/warehouses/entities/warehouse.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Inventory {

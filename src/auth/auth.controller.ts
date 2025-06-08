@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/login.dto';
 import { AtGuard } from './guards/at.guards';
@@ -42,7 +49,6 @@ export class AuthController {
   @UseGuards(RtGuard)
   @Post('refresh/:id')
   refreshTokens(@Param('id') id: number, @Req() req: RequestWithUser) {
-
     const user = req.user;
     if (!user || !user.refreshToken) {
       throw new Error('No user or refresh token found in request');

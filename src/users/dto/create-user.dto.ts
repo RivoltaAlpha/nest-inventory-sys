@@ -49,17 +49,17 @@ export class CreateUserDto {
   @IsEnum(Role)
   role: Role;
 
-    @ApiProperty()
+  @ApiProperty()
   @IsOptional()
   @IsString()
   hashedRefreshToken?: string;
 
-    @ApiProperty()
+  @ApiProperty()
   @IsOptional()
   @IsDate()
   created_at: Date;
 
-    @ApiProperty()
+  @ApiProperty()
   @IsOptional()
   @IsDate()
   updated_at: Date;

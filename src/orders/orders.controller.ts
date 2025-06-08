@@ -42,7 +42,7 @@ export class OrdersController {
     return this.ordersService.remove(+id);
   }
   @Get('user/:userId')
-findByUser(@Param('userId') userId: number) {
-  return this.ordersService.findByUser(userId);
-}
+  findByUser(@Param('userId') userId: number) {
+    return this.ordersService.findByUser(userId);
+  }
 }

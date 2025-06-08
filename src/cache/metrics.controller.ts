@@ -2,7 +2,6 @@ import { Controller, Get } from '@nestjs/common';
 import Redis from 'ioredis';
 import { config } from 'dotenv';
 
-
 // monitoring cache metrics
 config({
   path: ['.env', '.env.production', '.env.local'],
@@ -12,8 +11,6 @@ const redis = new Redis(process.env.REDIS_URL as string);
 
 @Controller('cache-metrics')
 export class CacheMetricsController {
-    
-
   @Get('')
   async getMetrics() {
     const info = await redis.info('stats');

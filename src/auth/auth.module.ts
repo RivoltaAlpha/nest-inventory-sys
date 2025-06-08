@@ -10,11 +10,12 @@ import { AccessStrategy } from './strategies/accsess.stategy';
 import { RefreshStrategy } from './strategies/refresh.stategy';
 
 @Module({
-  imports: [DatabaseModule,
+  imports: [
+    DatabaseModule,
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       global: true,
-    }),// Register JwtModule globally
+    }), // Register JwtModule globally
     PassportModule, // Import PassportModule to use guards
   ],
   providers: [AuthService, AccessStrategy, RefreshStrategy],

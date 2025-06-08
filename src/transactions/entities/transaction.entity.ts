@@ -30,10 +30,9 @@ export class Transaction {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @OneToOne(() => Transaction, transaction => transaction.product, {
+  @OneToOne(() => Transaction, (transaction) => transaction.product, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   product: Product;
-
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateAuthDto } from './dto/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
@@ -12,7 +16,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private configService: ConfigService, 
+    private configService: ConfigService,
     private jwtService: JwtService,
   ) {}
 
@@ -21,15 +25,23 @@ export class AuthService {
       this.jwtService.signAsync(
         { sub: userId, email: email },
         {
-          secret: this.configService.getOrThrow<string>('JWT_ACCESS_TOKEN_SECRET'),
-          expiresIn: this.configService.getOrThrow<string>('JWT_ACCESS_TOKEN_EXPIRES_IN'),
+          secret: this.configService.getOrThrow<string>(
+            'JWT_ACCESS_TOKEN_SECRET',
+          ),
+          expiresIn: this.configService.getOrThrow<string>(
+            'JWT_ACCESS_TOKEN_EXPIRES_IN',
+          ),
         },
       ),
       this.jwtService.signAsync(
         { sub: userId, email: email },
         {
-          secret: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_SECRET'),
-          expiresIn: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_EXPIRES_IN'),
+          secret: this.configService.getOrThrow<string>(
+            'JWT_REFRESH_TOKEN_SECRET',
+          ),
+          expiresIn: this.configService.getOrThrow<string>(
+            'JWT_REFRESH_TOKEN_EXPIRES_IN',
+          ),
         },
       ),
     ]);
@@ -37,14 +49,14 @@ export class AuthService {
   }
 
   private async hashData(data: string): Promise<string> {
-      const salt = await bcrypt.genSalt(10);
-      return bcrypt.hash(data, salt);
-    }
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(data, salt);
+  }
 
   private async saveRefreshToken(userId: number, refreshToken: string) {
     const hashedToken = await this.hashData(refreshToken);
     await this.userRepository.update(userId, {
-      hashedRefreshToken: hashedToken, 
+      hashedRefreshToken: hashedToken,
     });
   }
 
@@ -52,20 +64,23 @@ export class AuthService {
     const accessToken = this.jwtService.sign(
       { sub: userId, email: email },
       {
-        secret: this.configService.getOrThrow<string>('JWT_ACCESS_TOKEN_SECRET'),
+        secret: this.configService.getOrThrow<string>(
+          'JWT_ACCESS_TOKEN_SECRET',
+        ),
         expiresIn: '1h',
       },
     );
     const refreshToken = this.jwtService.sign(
       { id: userId, email: email },
       {
-        secret: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_SECRET'),
+        secret: this.configService.getOrThrow<string>(
+          'JWT_REFRESH_TOKEN_SECRET',
+        ),
         expiresIn: '7d',
       },
     );
-      return { accessToken, refreshToken };
-    }
-
+    return { accessToken, refreshToken };
+  }
 
   async SignUp(createAuthDto: CreateAuthDto) {
     // Check if user already exists
@@ -86,13 +101,16 @@ export class AuthService {
     });
     // generate tokens
     const savedUser = await this.userRepository.save(user);
-    const { accessToken, refreshToken } = await this.generateTokens(savedUser.user_id, savedUser.email);
+    const { accessToken, refreshToken } = await this.generateTokens(
+      savedUser.user_id,
+      savedUser.email,
+    );
 
     // Save refresh token in the database
     await this.saveRefreshToken(savedUser.user_id, refreshToken);
 
     // Return user and tokens
-  // Fetch updated user (with hashedRefreshToken)
+    // Fetch updated user (with hashedRefreshToken)
     const updatedUser = await this.userRepository.findOne({
       where: { user_id: savedUser.user_id },
     });
@@ -105,7 +123,9 @@ export class AuthService {
       select: ['user_id', 'email', 'password'],
     });
     if (!foundUser) {
-      throw new NotFoundException(`User with email ${createAuthDto.email} not found`);
+      throw new NotFoundException(
+        `User with email ${createAuthDto.email} not found`,
+      );
     }
 
     // Check password
@@ -131,7 +151,7 @@ export class AuthService {
     // Return user and tokens
     return { foundUser, accessToken, refreshToken };
   }
-  
+
   async signOut(userId: number) {
     // set user refresh token to null
     const res = await this.userRepository.update(userId, {
@@ -143,7 +163,6 @@ export class AuthService {
     }
     return { message: `User with id : ${userId} signed out successfully` };
   }
-
 
   async refreshTokens(userId: number, refreshToken: string) {
     const foundUser = await this.userRepository.findOne({
@@ -157,7 +176,7 @@ export class AuthService {
     if (!foundUser.hashedRefreshToken) {
       throw new Error('Refresh token not found');
     }
-  
+
     // Verify the refresh token
     const isRefreshTokenValid = await bcrypt.compare(
       refreshToken,
@@ -168,7 +187,8 @@ export class AuthService {
       throw new Error('Invalid refresh token');
     }
 
-    const { accessToken, refreshToken: newRefreshToken } = await this.generateTokens(foundUser.user_id, foundUser.email);
+    const { accessToken, refreshToken: newRefreshToken } =
+      await this.generateTokens(foundUser.user_id, foundUser.email);
     await this.saveRefreshToken(foundUser.user_id, newRefreshToken);
 
     return { accessToken, refreshToken: newRefreshToken };

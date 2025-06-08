@@ -17,7 +17,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  
+
   @Public() // This endpoint is accessible without authentication
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
