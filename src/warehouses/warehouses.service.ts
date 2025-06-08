@@ -31,4 +31,33 @@ export class WarehousesService {
   remove(id: number) {
     return this.warehousesRepository.delete(id);
   }
+
+  // warehouse inventories
+  async warehouseInventories(warehouse_id: number) {
+    return this.warehousesRepository.find({
+      where: {
+        warehouse_id: warehouse_id
+      },
+      relations: ['inventories'],
+      select: {
+        warehouse_id: true,
+        name: true,
+        location: true,
+        inventories: {
+          inventory_id: true,
+          stock_qty: true,
+          product: {
+            product_id: true,
+            name: true,
+            price: true,
+          },
+        },
+      }
+    });
+  }
+
+  // warehouse products
+  // warehouse orders
+  // warehouse suppliers
+
 }
