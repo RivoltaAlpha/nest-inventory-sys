@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/products/entities/product.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum TransactionType {
   Sale = 'Sale',
@@ -11,8 +12,8 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   transaction_id: number;
 
-  @Column({ type: 'int' })
-  product_id: number;
+  // @Column({ type: 'int' })
+  // product_id: number;
 
   @Column({ type: 'int' })
   quantity: number;
@@ -28,4 +29,11 @@ export class Transaction {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @OneToOne(() => Transaction, transaction => transaction.product, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  product: Product;
+
 }
