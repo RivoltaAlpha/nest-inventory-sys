@@ -72,4 +72,90 @@ export class ProductsService {
     }
     return `product with id ${id} not found`;
   }
+
+  // product suppliers
+  async productSuppliers (supplier_id: number ) {
+    this.productsRepository.find({
+      where: {
+
+      },
+      relations: [],
+      select: {
+          product_id: true,
+          name: true,
+          price: true,
+          supplier: {
+            name: true,
+            contact_info: true
+          }
+      }
+    })
+  }
+
+  // order by category
+  async orderByCategory(category_id: number): Promise<Product[]> {
+    return this.productsRepository.find({
+      where: { category: { category_id } },
+      relations: ['category'],
+      select: {
+        product_id: true,
+        name: true,
+        price: true,
+        category: {
+          name: true,
+          description: true,
+        },
+      },
+    });
+  }
+
+  // order by supplier
+  async orderBySupplier(supplier_id: number): Promise<Product[]> {
+    return this.productsRepository.find({
+      where: { supplier: { supplier_id } },
+      relations: ['supplier'],
+      select: {
+        product_id: true,
+        name: true,
+        price: true,
+        supplier: {
+          name: true,
+          contact_info: true,
+        },
+      },
+    });
+  }
+
+  // order by price
+  async orderByPrice(order: 'ASC' | 'DESC'): Promise<Product[]> {
+    return this.productsRepository.find({
+      order: { price: order },
+      select: {
+        product_id: true,
+        name: true,
+        price: true,
+        supplier: {
+          name: true,
+          contact_info: true,
+        },
+      },
+    });
+  }
+
+  // order by sku
+  async orderBySku(order: 'ASC' | 'DESC'): Promise<Product[]> {
+    return this.productsRepository.find({
+      order: { sku: order },
+      select: {
+        product_id: true,
+        name: true,
+        price: true,
+        supplier: {
+          name: true,
+          contact_info: true,
+        },
+      },
+    });
+  }
+
 }
