@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateShippingDto } from './dto/create-shipping.dto';
 import { UpdateShippingDto } from './dto/update-shipping.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Shipping } from './entities/shipping.entity';
+import { Shipping, ShippingStatus } from './entities/shipping.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -31,5 +31,20 @@ export class ShippingService {
 
   remove(id: number) {
     return this.shippingRepository.delete(id);
+  }
+
+  // shipping status filter
+  async filterByStatus(status: string) {
+    return this.shippingRepository.find({
+      where: { status: status as ShippingStatus},
+      select: {
+        shipping_id: true,
+        order: {
+          order_id: true,
+          total_price: true,
+          status: true,
+        },
+      },
+    });
   }
 }
