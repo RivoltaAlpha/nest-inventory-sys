@@ -53,6 +53,7 @@ export class OrdersService {
     return this.ordersRepository.delete(id);
   }
 
+  // user orders 
   async findByUser(userId: number) {
     return this.ordersRepository.find({
       where: { user: { user_id: userId } },
@@ -72,6 +73,13 @@ export class OrdersService {
           price: true,
         },
       },
+    });
+  }
+
+    // filter order with status
+  async getStatus(productStatus: string) {
+    return this.ordersRepository.find({
+      where: { status: productStatus as Order['status'] }
     });
   }
 }
