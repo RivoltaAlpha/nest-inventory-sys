@@ -26,8 +26,4 @@ export class Inventory {
   })
   @JoinColumn({ name: 'warehouse_id' })
   warehouse: Warehouse;
-
-  // product_id: number;
-
-  // warehouse_id: number;
 }
