@@ -31,4 +31,30 @@ export class SuppliersService {
   remove(id: number) {
     return this.suppliersRepository.delete(id);
   }
+  // supplier products
+  async supplierProducts(supplier_id: number) {
+    return this.suppliersRepository.find({
+      where: {
+        supplier_id: supplier_id
+      },
+      relations: ['products'],
+      select: {
+        supplier_id: true,
+        name: true,
+        contact_info: true,
+        products: {
+          product_id: true,
+          name: true,
+          price: true,
+        },
+      }
+    });
+  }
+
+  // supplier orders
+
+  // supplier inventory
+  
+  // supplier categories
+
 }
