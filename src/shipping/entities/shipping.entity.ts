@@ -35,7 +35,10 @@ export class Shipping {
   @Column({ type: 'timestamp' })
   created_at: Date;
 
-  @OneToOne(() => Order, (order) => order.shipping)
+  @OneToOne(() => Order, (order) => order.shipping, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'order_id' })
   order: Relation<Order>;
 }
