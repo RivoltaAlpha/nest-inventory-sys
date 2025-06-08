@@ -32,4 +32,24 @@ export class UsersService {
   remove(id: number) {
     return this.usersRepository.delete(id);
   }
+  // user orders
+  async userOrders(userId: number) {
+    return this.usersRepository.find({
+      where: { user_id: userId },
+      relations: ['orders'],
+      select: {
+        user_id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        orders: {
+          order_id: true,
+          total_price: true,
+          status: true,
+        },
+      },
+    });
+  }
 }
+
+
