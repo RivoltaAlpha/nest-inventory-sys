@@ -43,4 +43,25 @@ export class CategoriesService {
       throw new Error(`Error removing category with id ${id}`);
     }
   }
+
+  // category products
+  async categoryProducts (category_id: number) {
+    return this.categoriesRepository.find({
+      where: {
+        category_id: category_id
+      },
+      relations: ['products'],
+      select: {
+        category_id:true,
+        name:true,
+        description:true,
+        products: {
+          product_id: true,
+          name: true,
+          price: true,
+        },
+      }
+    })
+
+  }
 }
