@@ -32,4 +32,26 @@ export class InventoriesService {
   remove(id: number) {
     return this.inventoryRepository.delete(id);
   }
+
+  // inventory products
+  async inventoryProducts(inventory_id: number) {
+    return this.inventoryRepository.find({
+      where: {
+        inventory_id: inventory_id
+      },
+      relations: ['products', 'warehouse'],
+      select: {
+        stock_qty: true,
+        warehouse: {
+          location: true,
+          name: true,
+        },
+        product: {
+          product_id: true,
+          name: true,
+          price: true,
+        },
+      }
+    })
+  }
 }
