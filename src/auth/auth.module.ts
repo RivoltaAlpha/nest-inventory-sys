@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AccessStrategy } from './strategies/accsess.stategy';
 import { RefreshStrategy } from './strategies/refresh.stategy';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { RefreshStrategy } from './strategies/refresh.stategy';
     }), // Register JwtModule globally
     PassportModule, // Import PassportModule to use guards
   ],
-  providers: [AuthService, AccessStrategy, RefreshStrategy],
+  providers: [AuthService, AccessStrategy, RefreshStrategy, RolesGuard],
   controllers: [AuthController],
+  exports: [ RolesGuard], // Export AuthService, JwtModule, and RolesGuard for use in other modules
 })
 export class AuthModule {}
