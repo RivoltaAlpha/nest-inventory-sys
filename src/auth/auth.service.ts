@@ -20,10 +20,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  private async getTokens(userId: number, email: string) {
+  private async getTokens(userId: number, email: string, role: string) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
-        { sub: userId, email: email },
+        { sub: userId, email: email, role: role },
         {
           secret: this.configService.getOrThrow<string>(
             'JWT_ACCESS_TOKEN_SECRET',
@@ -34,7 +34,7 @@ export class AuthService {
         },
       ),
       this.jwtService.signAsync(
-        { sub: userId, email: email },
+        { sub: userId, email: email, role: role },
         {
           secret: this.configService.getOrThrow<string>(
             'JWT_REFRESH_TOKEN_SECRET',
@@ -120,7 +120,7 @@ export class AuthService {
   async SignIn(createAuthDto: CreateAuthDto) {
     const foundUser = await this.userRepository.findOne({
       where: { email: createAuthDto.email },
-      select: ['user_id', 'email', 'password'],
+      select: ['user_id', 'email', 'password','role'],
     });
     if (!foundUser) {
       throw new NotFoundException(
@@ -143,6 +143,7 @@ export class AuthService {
     const { accessToken, refreshToken } = await this.getTokens(
       foundUser.user_id,
       foundUser.email,
+      foundUser.role, // Assuming role is stored in the user entity
     );
 
     // Save refresh token in the database
@@ -164,10 +165,10 @@ export class AuthService {
     return { message: `User with id : ${userId} signed out successfully` };
   }
 
-  async refreshTokens(userId: number, refreshToken: string) {
+  async refreshTokens(userId: number, refreshToken: string, role: string) {
     const foundUser = await this.userRepository.findOne({
       where: { user_id: userId },
-      select: ['user_id', 'email', 'hashedRefreshToken'],
+      select: ['user_id', 'email', 'hashedRefreshToken', 'role'], // Select only necessary fields
     });
 
     if (!foundUser) {
