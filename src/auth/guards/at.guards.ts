@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AtGuard extends AuthGuard('access') {
   constructor(
-    private configService: ConfigService,
     private reflector: Reflector,
   ) {
     super();
@@ -16,6 +15,14 @@ export class AtGuard extends AuthGuard('access') {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
+      return true; // If the route is public, allow access
+    }
+
     return super.canActivate(context);
   }
 
