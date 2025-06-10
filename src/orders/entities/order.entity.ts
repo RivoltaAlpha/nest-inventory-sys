@@ -49,10 +49,7 @@ export class Order {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToOne(() => Shipping, (shipping) => shipping.order, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
+  @OneToOne(() => Shipping, (shipping) => shipping.order)
   shipping: Relation<Shipping[]>;
 
   @ManyToMany(() => Product, (product) => product.orders)
