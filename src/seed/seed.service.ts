@@ -247,7 +247,7 @@ export class SeedService {
     this.logger.log(`Seeding ${count} transactions...`);
     const transactions = Array.from({ length: count }, () => {
       const transaction = new Transaction();
-      transaction.product_id = faker.helpers.arrayElement(
+      transaction.product.product_id = faker.helpers.arrayElement(
         orders.flatMap((order) => order.products),
       ).product_id;
       transaction.price = parseFloat(faker.commerce.price());

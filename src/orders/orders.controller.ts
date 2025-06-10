@@ -10,9 +10,10 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
+@ApiTags('Orders') // This groups the endpoints under the 'Orders' tag in Swagger documentation
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}

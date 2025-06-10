@@ -10,9 +10,10 @@ import {
 import { PricingsService } from './pricings.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
+@ApiTags('Pricings') // This groups the endpoints under the 'Pricing' tag in Swagger documentation
 @Controller('pricings')
 export class PricingsController {
   constructor(private readonly pricingsService: PricingsService) {}

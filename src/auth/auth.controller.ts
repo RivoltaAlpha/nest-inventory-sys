@@ -12,7 +12,7 @@ import { AtGuard } from './guards/at.guards';
 import { RtGuard } from './guards/rt.guards';
 import { Public } from './decorators/public.decorator';
 import { Request } from 'express';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 export interface RequestWithUser extends Request {
   user: {
@@ -23,6 +23,7 @@ export interface RequestWithUser extends Request {
 }
 
 @ApiBearerAuth('access-token')
+@ApiTags('Auth') // This groups the endpoints under the 'Auth' tag in Swagger documentation
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
