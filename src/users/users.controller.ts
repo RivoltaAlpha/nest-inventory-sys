@@ -20,7 +20,7 @@ import { Role } from './entities/user.entity';
 import { AtGuard } from 'src/auth/guards/at.guards';
 
 @ApiBearerAuth('access-token') // This indicates that the endpoints require authentication
-@ApiTags('User') // This groups the endpoints under the 'Users' tag in Swagger documentation
+@ApiTags('Users') // This groups the endpoints under the 'Users' tag in Swagger documentation
 @UseGuards(RolesGuard, AtGuard) // This applies the RolesGuard to all endpoints in this controller
 @Controller('users')
 export class UsersController {

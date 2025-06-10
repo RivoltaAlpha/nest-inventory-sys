@@ -13,7 +13,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth('access-token')
-@ApiTags('Category') // This groups the endpoints under the 'Category' tag in Swagger documentation
+@ApiTags('Categories') // This groups the endpoints under the 'Category' tag in Swagger documentation
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
