@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseInterceptors,
-  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -15,13 +14,10 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Role } from 'src/users/dto/create-user.dto'; 
 
 @Controller('products')
 @ApiTags('Products') // This groups the endpoints under the 'Products' tag in Swagger documentation
-@UseGuards(RolesGuard, AtGuard) // This applies the RolesGuard to all endpoints in this controller
 @UseInterceptors(CacheInterceptor)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}

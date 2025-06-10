@@ -6,20 +6,16 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Role } from 'src/users/dto/create-user.dto';
 
 @ApiBearerAuth('access-token')
 @ApiTags('Categories') 
-@UseGuards(RolesGuard, AtGuard)
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}

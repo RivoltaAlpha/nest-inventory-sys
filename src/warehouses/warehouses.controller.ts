@@ -6,21 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { WarehousesService } from './warehouses.service';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Roles } from 'src/auth/decorators/role.decorators';
 import { Role } from 'src/users/dto/create-user.dto';
 
 @ApiBearerAuth('access-token')
 @ApiTags('Warehouses') // This groups the endpoints under the 'Warehouses' tag in Swagger documentation
 @Controller('warehouses')
-@UseGuards(RolesGuard, AtGuard)
 export class WarehousesController {
   constructor(private readonly warehousesService: WarehousesService) {}
 

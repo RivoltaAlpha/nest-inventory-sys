@@ -6,20 +6,16 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { ReturnsService } from './returns.service';
 import { CreateReturnDto } from './dto/create-return.dto';
 import { UpdateReturnDto } from './dto/update-return.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Role } from 'src/users/dto/create-user.dto'; 
 
 @ApiBearerAuth('access-token')
 @ApiTags('Returns') // This groups the endpoints under the 'Returns' tag in Swagger documentation
-@UseGuards(RolesGuard, AtGuard) // This applies the RolesGuard to all endpoints in this controller
 @Controller('returns')
 export class ReturnsController {
   constructor(private readonly returnsService: ReturnsService) {}

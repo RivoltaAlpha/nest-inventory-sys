@@ -23,6 +23,9 @@ import { createKeyv, Keyv } from '@keyv/redis';
 import { CacheMetricsController } from './cache/metrics.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './auth/guards/at.guards';
+import { RolesGuard } from './auth/guards/roles.guard';
+import { User } from './users/entities/user.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -65,6 +68,7 @@ import { AtGuard } from './auth/guards/at.guards';
         };
       },
     }),
+    TypeOrmModule.forFeature([User]), // Import User entity
   ],
   controllers: [AppController, CacheMetricsController],
   // controllers: [AppController],
@@ -76,7 +80,11 @@ import { AtGuard } from './auth/guards/at.guards';
     {
       provide: APP_GUARD,
       useClass: AtGuard, // Global access token guard
-    }
+    },
+    {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  },
   ],
 })
 export class AppModule implements NestModule {

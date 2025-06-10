@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
   Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -15,13 +14,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Role } from './entities/user.entity';
 
 @ApiBearerAuth('access-token') // This indicates that the endpoints require authentication
 @ApiTags('Users') // This groups the endpoints under the 'Users' tag in Swagger documentation
-@UseGuards(RolesGuard, AtGuard) // This applies the RolesGuard to all endpoints in this controller
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

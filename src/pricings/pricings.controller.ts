@@ -6,20 +6,17 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { PricingsService } from './pricings.service';
 import { CreatePricingDto } from './dto/create-pricing.dto';
 import { UpdatePricingDto } from './dto/update-pricing.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AtGuard } from 'src/auth/guards/at.guards';
 import { Role } from 'src/users/dto/create-user.dto'
 
 @ApiBearerAuth('access-token')
 @ApiTags('Pricings') // This groups the endpoints under the 'Pricing' tag in Swagger documentation
-@UseGuards(RolesGuard, AtGuard) 
+@Controller('pricings')
 export class PricingsController {
   constructor(private readonly pricingsService: PricingsService) {}
 
