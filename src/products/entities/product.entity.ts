@@ -59,7 +59,7 @@ export class Product {
   @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;
 
-  @OneToMany(() => Inventory, (inventory) => inventory.product)
+  @ManyToOne(() => Inventory, (inventory) => inventory.product)
   inventories: Inventory[];
 
   @OneToOne(() => Return, (returnEntity) => returnEntity.product)
