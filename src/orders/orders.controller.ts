@@ -6,43 +6,55 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/role.decorators';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { AtGuard } from 'src/auth/guards/at.guards';
+import { Role } from 'src/users/dto/create-user.dto'; 
 
 @ApiBearerAuth('access-token')
 @ApiTags('Orders') // This groups the endpoints under the 'Orders' tag in Swagger documentation
+@UseGuards(RolesGuard, AtGuard) 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post('create')
+  @Roles( Role.Sales) // This endpoint is restricted to users with the 'admin', 'manager', or 'sales' role
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
   }
 
   @Get('all')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse) 
   findAll() {
     return this.ordersService.findAll();
   }
 
   @Get(':id')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse, Role.Supplier)
   findOne(@Param('id') id: string) {
     return this.ordersService.findOne(+id);
   }
 
   @Patch('update/:id')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse)
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(+id, updateOrderDto);
   }
 
   @Delete('delete/:id')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse)
   remove(@Param('id') id: string) {
     return this.ordersService.remove(+id);
   }
   @Get('user/:userId')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse, Role.Supplier)
   findByUser(@Param('userId') userId: number) {
     return this.ordersService.findByUser(userId);
   }

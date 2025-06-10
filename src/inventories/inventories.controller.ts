@@ -6,34 +6,44 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { InventoriesService } from './inventories.service';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/role.decorators';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { AtGuard } from 'src/auth/guards/at.guards';
+import { Role } from 'src/users/dto/create-user.dto'; 
 
 @ApiBearerAuth('access-token')
 @ApiTags('Inventory') // This groups the endpoints under the 'Inventory' tag in Swagger documentation
+@UseGuards(RolesGuard, AtGuard)
 @Controller('inventories')
 export class InventoriesController {
   constructor(private readonly inventoriesService: InventoriesService) {}
 
   @Post('create')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse)
   create(@Body() createInventoryDto: CreateInventoryDto) {
     return this.inventoriesService.create(createInventoryDto);
   }
 
   @Get('all')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
   findAll() {
     return this.inventoriesService.findAll();
   }
 
   @Get(':id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
   findOne(@Param('id') id: string) {
     return this.inventoriesService.findOne(+id);
   }
 
   @Patch('update/:id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
   update(
     @Param('id') id: string,
     @Body() updateInventoryDto: UpdateInventoryDto,
@@ -42,6 +52,7 @@ export class InventoriesController {
   }
 
   @Delete('delete/:id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
   remove(@Param('id') id: string) {
     return this.inventoriesService.remove(+id);
   }
