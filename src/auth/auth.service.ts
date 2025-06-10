@@ -165,7 +165,7 @@ export class AuthService {
     return { message: `User with id : ${userId} signed out successfully` };
   }
 
-  async refreshTokens(userId: number, refreshToken: string, role: string) {
+  async refreshTokens(userId: number, refreshToken: string) {
     const foundUser = await this.userRepository.findOne({
       where: { user_id: userId },
       select: ['user_id', 'email', 'hashedRefreshToken', 'role'], // Select only necessary fields
