@@ -46,13 +46,13 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse, Role.Supplier) // This endpoint is restricted to users with the 'admin', 'manager', 'sales', 'warehouse', or 'supplier' role
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse) // This endpoint is restricted to users with the 'admin', 'manager', 'sales', or 'warehouse' role
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete('delete/:id')
-  @Roles(Role.Admin, Role.Manager) // This endpoint is restricted to users with the 'admin' or 'manager' role
+  @Roles(Role.Admin, Role.Warehouse, Role.Manager, Role.Supplier, Role.Sales) // This endpoint is restricted to users with the 'admin', 'warehouse', or 'supplier' role
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
