@@ -14,12 +14,34 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto) {
     const order = this.ordersRepository.create({
       ...createOrderDto,
-      user: { user_id: createOrderDto.user_id }, // Link user relation
+      user: { user_id: createOrderDto.user_id },
       products: createOrderDto.products.map((p) => ({
         product_id: p.product_id,
-      })), // Link product relations
+      })),
     });
-    return this.ordersRepository.save(order);
+    const savedOrder = await this.ordersRepository.save(order);
+
+    // Fetch with relations
+    return this.ordersRepository.findOne({
+      where: { order_id: savedOrder.order_id },
+      relations: ['user', 'products'],
+      select: {
+        order_id: true,
+        total_price: true,
+        status: true,
+        user: {
+          user_id: true,
+          first_name: true,
+          last_name: true,
+          email: true,
+        },
+        products: {
+          product_id: true,
+          name: true,
+          price: true,
+        },
+      },
+    });
   }
 
   findAll() {
@@ -79,7 +101,23 @@ export class OrdersService {
     // filter order with status
   async getStatus(productStatus: string) {
     return this.ordersRepository.find({
-      where: { status: productStatus as Order['status'] }
+      where: { status: productStatus as Order['status'] },
+      relations: ['user', 'products'],
+      select: {
+        order_id: true,
+        total_price: true,
+        status: true,
+        user: {
+          first_name: true,
+          last_name: true,
+          email: true,
+        },
+        products: {
+          product_id: true,
+          name: true,
+          price: true,
+        },
+      },
     });
   }
 }

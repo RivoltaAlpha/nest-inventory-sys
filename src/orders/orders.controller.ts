@@ -21,7 +21,7 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post('create')
-  @Roles( Role.Sales) // This endpoint is restricted to users with the 'admin', 'manager', or 'sales' role
+  @Roles( Role.Sales, Role.Admin, Role.Manager) 
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
   }
@@ -53,5 +53,10 @@ export class OrdersController {
   @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse, Role.Supplier)
   findByUser(@Param('userId') userId: number) {
     return this.ordersService.findByUser(userId);
+  }
+  @Get('status/:Pending')
+  @Roles(Role.Admin, Role.Manager, Role.Sales, Role.Warehouse, Role.Supplier)
+  getStatus(@Param('Pending') Pending: string) {
+    return this.ordersService.getStatus(Pending);
   }
 }
