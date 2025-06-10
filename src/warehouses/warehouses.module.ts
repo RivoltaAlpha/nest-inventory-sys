@@ -5,9 +5,10 @@ import { DatabaseModule } from 'src/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Warehouse } from './entities/warehouse.entity';
 import { User } from 'src/users/entities/user.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 @Module({
-  imports: [DatabaseModule, TypeOrmModule.forFeature([Warehouse,User])],
+  imports: [DatabaseModule, TypeOrmModule.forFeature([Warehouse,User, Order])],
   controllers: [WarehousesController],
   providers: [WarehousesService],
 })

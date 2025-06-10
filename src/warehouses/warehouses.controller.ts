@@ -52,4 +52,23 @@ export class WarehousesController {
   remove(@Param('id') id: string) {
     return this.warehousesService.remove(+id);
   }
+
+  @Get('inventories/:warehouse_id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Supplier)
+  warehouseInventories(@Param('warehouse_id') warehouse_id: string) {
+    return this.warehousesService.warehouseInventories(+warehouse_id);
+  }
+  
+    @Get('products/:warehouse_id')
+    @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Supplier)
+    warehouseProducts(@Param('warehouse_id') warehouse_id: string) {
+      return this.warehousesService.warehouseProducts(+warehouse_id);
+    }
+
+    // not working for now
+  @Get('orders/:warehouse_id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Supplier)
+  warehouseOrders(@Param('warehouse_id') warehouse_id: string) {
+    return this.warehousesService.warehouseOrders(+warehouse_id);
+  }
 }
