@@ -6,10 +6,8 @@ export class CreateInventoryDto {
   inventory_id: number;
 
   @IsOptional()
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsNumber({}, { each: true })
-  products: number[];
+  @IsNumber()
+  products: number;
 
   @IsNotEmpty()
   @IsNumber()

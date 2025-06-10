@@ -52,4 +52,10 @@ export class InventoriesController {
   remove(@Param('id') id: string) {
     return this.inventoriesService.remove(+id);
   }
+
+  @Get('products/:inventory_id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
+  inventoryProducts(@Param('inventory_id') inventory_id: string) {
+    return this.inventoriesService.inventoryProducts(+inventory_id);
+  }
 }
