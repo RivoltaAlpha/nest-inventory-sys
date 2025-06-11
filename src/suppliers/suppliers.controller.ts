@@ -26,7 +26,7 @@ export class SuppliersController {
     return this.suppliersService.create(createSupplierDto);
   }
 
-  @Get()
+  @Get('all')
   @Roles(Role.Admin, Role.Manager, Role.Supplier) 
   findAll() {
     return this.suppliersService.findAll();
@@ -38,7 +38,7 @@ export class SuppliersController {
     return this.suppliersService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   @Roles(Role.Admin, Role.Supplier) 
   update(
     @Param('id') id: string,
@@ -47,7 +47,7 @@ export class SuppliersController {
     return this.suppliersService.update(+id, updateSupplierDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   @Roles(Role.Admin, Role.Supplier) 
   remove(@Param('id') id: string) {
     return this.suppliersService.remove(+id);
