@@ -32,7 +32,7 @@ async function bootstrap() {
     .addTag('Pricings', 'Pricing management endpoints')
     .addTag('Seeding', 'Database seeding endpoints')
     .addServer('http://localhost:8000', 'Local development server')
-    .addServer('https://https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net//', 'Production server')
+    .addServer('https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net', 'Production server')
     .addBearerAuth(
       {
         type: 'http',
@@ -59,7 +59,10 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: '*', // Allow all origins
+  origin: [
+    'http://localhost:8000',
+    'https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net',
+  ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
     allowedHeaders: 'Content-Type, Authorization', // Allowed headers
     credentials: true, // Allow credentials
