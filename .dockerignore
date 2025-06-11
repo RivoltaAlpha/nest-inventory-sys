@@ -3,7 +3,6 @@ npm-debug.log
 dist
 .git
 .gitignore
-README.md
 .env*
 !.env.example
 .nyc_output
@@ -19,3 +18,10 @@ test
 jest.config.js
 *.test.ts
 *.spec.ts
+
+# other files to ignore
+app.http
+role.http
+# all md files
+*.md
+*.pdf

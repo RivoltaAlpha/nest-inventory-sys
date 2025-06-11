@@ -24,7 +24,7 @@ COPY . .
 EXPOSE 8000
 
 # start the application
-CMD ["pnpm","run", "start:dev"]
+CMD ["pnpm","run", "start:dev", "postbuild"]
 
 # healthcheck to ensure the app is running
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
