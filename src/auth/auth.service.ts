@@ -60,9 +60,9 @@ export class AuthService {
     });
   }
 
-  private async generateTokens(userId: number, email: string) {
+  private async generateTokens(userId: number, email: string, role: string) {
     const accessToken = this.jwtService.sign(
-      { sub: userId, email: email },
+      { sub: userId, email: email, role: role },
       {
         secret: this.configService.getOrThrow<string>(
           'JWT_ACCESS_TOKEN_SECRET',
@@ -71,7 +71,7 @@ export class AuthService {
       },
     );
     const refreshToken = this.jwtService.sign(
-      { id: userId, email: email },
+      { id: userId, email: email, role: role },
       {
         secret: this.configService.getOrThrow<string>(
           'JWT_REFRESH_TOKEN_SECRET',
@@ -104,6 +104,7 @@ export class AuthService {
     const { accessToken, refreshToken } = await this.generateTokens(
       savedUser.user_id,
       savedUser.email,
+      savedUser.role, // Assuming role is stored in the user entity
     );
 
     // Save refresh token in the database
@@ -189,7 +190,7 @@ export class AuthService {
     }
 
     const { accessToken, refreshToken: newRefreshToken } =
-      await this.generateTokens(foundUser.user_id, foundUser.email);
+      await this.generateTokens(foundUser.user_id, foundUser.email, foundUser.role);
     await this.saveRefreshToken(foundUser.user_id, newRefreshToken);
 
     return { accessToken, refreshToken: newRefreshToken };
