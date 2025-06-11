@@ -596,3 +596,7 @@ This NestJS application implements a comprehensive JWT-based authentication syst
 - **Security Best Practices**: Short-lived access tokens, role-based restrictions, password hashing
 - **Flexible Access Control**: Support for public routes, role combinations, and hierarchical permissions
 - **Audit Trail**: Clear separation between authentication and authorization for better logging
+
+
+### Rate limiting
+![alt text](./public/image.png)
