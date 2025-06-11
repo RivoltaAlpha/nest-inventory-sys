@@ -32,7 +32,7 @@ export class Shipping {
   @Column({ type: 'timestamp' })
   shipped_at: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
   @OneToOne(() => Order, (order) => order.shipping, {
