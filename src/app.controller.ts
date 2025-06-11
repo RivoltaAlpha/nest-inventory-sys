@@ -1,10 +1,12 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { readFile } from 'fs/promises';
+import { Public } from './auth/decorators/public.decorator';
 
 @Controller()
 export class AppController {
   @Get('/')
+  @Public()
   async serveIndex(@Res() res: Response) {
     try {
       const html = await readFile('./dist/index.html', 'utf-8');
