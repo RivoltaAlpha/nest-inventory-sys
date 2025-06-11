@@ -26,6 +26,7 @@ import { AtGuard } from './auth/guards/at.guards';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { User } from './users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule } from '@nestjs/throttler';
 // import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
@@ -50,14 +51,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // ThrottlerModule.forRootAsync({ //  protect applications from brute-force attacks thru rate-limiting.
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) => ({
-    //     ttl: configService.get<number>('THROTTLER_TTL') ?? 60,
-    //     limit: configService.get<number>('THROTTLER_LIMIT') ?? 10,
-    //   }),
-    // }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => [
+        {
+          ttl: configService.getOrThrow<number>('THROTTLER_TTL', {
+            infer: true,
+          }),
+          limit: configService.getOrThrow<number>('THROTTLER_LIMIT', {
+            infer: true,
+          }),
+          ignoreUserAgents: [/^curl\//], // Ignore specific user agents
+        },
+      ],
+    }),
     CacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
