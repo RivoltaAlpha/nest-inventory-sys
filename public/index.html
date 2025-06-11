@@ -39,15 +39,16 @@
         max-width: 1200px;
       }
       .role-card {
-      box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
+        box-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
         background-color: rgba(38, 7, 53, 0.184);
         border-radius: 12px;
         padding: 28px 22px 22px 22px;
         width: 260px;
-        min-height: 220px;
+        min-height: 200px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        gap: 20px;
         transition: transform 0.15s;
         border: 2px solid #e6e6fa;
       }
@@ -68,6 +69,11 @@
         font-size: 1em;
         margin: 0;
       }
+      .role-list li {
+        margin-bottom: 8px;
+        position: relative;
+        padding-left: 20px;
+      }
       .swagger-btn {
         display: inline-block;
         margin: 30px auto 0 auto;
@@ -87,31 +93,7 @@
         background: linear-gradient(90deg, #0066cc 60%, #8a41ac 100%);
         transform: scale(1.04);
       }
-      ul.endpoints-list {
-        list-style-type: none;
-        background-color: hsl(240, 100%, 90%);
-        padding: 20px;
-        margin: 30px auto 0 auto;
-        max-width: 600px;
-      }
-      ul.endpoints-list li {
-        margin: 10px 0;
-        padding: 18px;
-        border-radius: 10px;
-        background-color: rgba(138, 65, 172, 0.094);
-        box-shadow: 0 0 2px 0 rgba(0,0,0,0.05);
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      ul.endpoints-list a {
-        text-decoration: none;
-        color: #0066cc;
-        font-size: 20px;
-      }
-      ul.endpoints-list a:hover {
-        text-decoration: underline;
-      }
+    
       @media (max-width: 900px) {
         .cards-container {
           flex-direction: column;

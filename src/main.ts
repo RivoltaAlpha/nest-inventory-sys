@@ -32,7 +32,7 @@ async function bootstrap() {
     .addTag('Pricings', 'Pricing management endpoints')
     .addTag('Seeding', 'Database seeding endpoints')
     .addServer('http://localhost:8000', 'Local development server')
-    .addServer('https://nest-inventory-dmatg7afhndnbdgu.southafricanorth-01.azurewebsites.net/', 'Production server')
+    .addServer('https://https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net//', 'Production server')
     .addBearerAuth(
       {
         type: 'http',
