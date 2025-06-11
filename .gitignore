@@ -4,6 +4,8 @@
 /build
 app.http
 role.http
+Dockerfile
+DockerfileProd
 
 # Logs
 # logs
