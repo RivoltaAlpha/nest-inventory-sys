@@ -119,6 +119,53 @@ Standard create, read, update, delete operations for:
 
 ---
 
+
+# Roles 😎
+Here are the typical tasks for each role in your Inventory Management System:
+
+---
+
+### **Admin**
+- Manage users (create, update, delete, assign roles)
+- Manage all products, categories, suppliers, and warehouses
+- View and manage all orders, transactions, and reports
+- Set pricing, discounts, and promotions
+- Full access to all system features
+
+---
+
+### **Manager**
+- View and approve/reject orders
+- View sales and inventory reports
+- Oversee inventory levels and warehouse operations
+- Coordinate between sales, warehouse, and suppliers
+
+---
+
+### **Warehouse**
+- View and update inventory levels
+- Manage product storage and stock movements
+- Process incoming shipments and outgoing orders
+- Track inventory across multiple warehouses
+
+---
+
+### **Sales**
+- View available products and inventory
+- Create and manage customer orders
+- Track order status and details
+- Shipping orders
+
+---
+
+### **Supplier**
+- View and update their own product listings
+- Manage stock supplied to the warehouse
+- View orders related to their products
+- Update product availability and pricing
+
+---
+
 ## 🔐 Security Overview
 
 - JWT Guards protect sensitive routes.
