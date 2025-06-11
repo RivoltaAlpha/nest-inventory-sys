@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
@@ -16,28 +17,33 @@ export enum ShippingStatus {
 }
 
 export class CreateShippingDto {
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   shipping_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   order_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   tracking_number: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @IsEnum(ShippingStatus)
   status: ShippingStatus;
 
-  @IsNotEmpty()
+  @ApiProperty()
   @Type(() => Date)
   @IsDate()
   shipped_at: Date;
 
+  @ApiProperty()
   @IsOptional()
   @Type(() => Date)
   @IsDate()

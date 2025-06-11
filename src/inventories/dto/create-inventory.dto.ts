@@ -1,22 +1,28 @@
-import { IsNotEmpty, IsDate, IsNumber, IsOptional, IsArray, ArrayNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsDate, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateInventoryDto {
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   inventory_id: number;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   products: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   warehouse_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   stock_qty: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsOptional()
   @IsDate()

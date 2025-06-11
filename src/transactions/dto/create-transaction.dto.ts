@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsString,
@@ -16,27 +17,33 @@ export enum TransactionType {
 }
 
 export class CreateTransactionDto {
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   transaction_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   product_id: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   quantity: number;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   price: number;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   @IsEnum(TransactionType)
   type: TransactionType;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsOptional()
   @IsDate()
