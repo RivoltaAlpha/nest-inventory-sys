@@ -3,6 +3,7 @@
 /node_modules
 /build
 app.http
+role.http
 
 # Logs
 # logs
