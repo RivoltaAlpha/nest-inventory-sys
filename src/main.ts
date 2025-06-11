@@ -11,8 +11,21 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());  // detects DTO's and validates them globally
   app.use(helmet());
   // app.setGlobalPrefix('api'); // Set a global prefix for all routes
-
   // app.useGlobalFilters(new AllExceptionsFilter());  // Global exception filter to handle all exceptions
+
+
+  // Enable CORS for specific origins
+  app.enableCors({
+  origin: [
+    'http://localhost:8000',
+    'https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net/api/docs',
+  ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
+    allowedHeaders: 'Content-Type, Authorization', 
+    credentials: true,
+  });
+
+  
   // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('Inventory API')
@@ -58,15 +71,6 @@ async function bootstrap() {
     },
   });
 
-  app.enableCors({
-  origin: [
-    'http://localhost:8000',
-    'https://redeployedinventory-dnd8gmc3a2a0dzcw.southafricanorth-01.azurewebsites.net',
-  ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed methods
-    allowedHeaders: 'Content-Type, Authorization', // Allowed headers
-    credentials: true, // Allow credentials
-  });
 
   const configService = app.get(ConfigService);
   const PORT = configService.getOrThrow<number>('PORT');
