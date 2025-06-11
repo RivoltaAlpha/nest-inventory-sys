@@ -9,7 +9,7 @@ export class AppController {
   @Public()
   async serveIndex(@Res() res: Response) {
     try {
-      const html = await readFile('./public/index.html', 'utf-8');
+      const html = await readFile('./dist/index.html', 'utf-8');
       res.type('html').send(html);
     } catch (err) {
       const message =

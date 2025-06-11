@@ -1,7 +1,7 @@
 services:  
   inventory-management-db:
     image: postgres:15-alpine
-    container_name: inventory-management-db-prod
+    container_name: prod-inventory-management-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${DB_USERNAME:-postgres}
@@ -21,7 +21,7 @@ services:
       retries: 5
   redis:
     image: redis:8.0-alpine
-    container_name: redis-cache-prod
+    container_name: prod-redis-cache
     restart: unless-stopped
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD:-your_secure_redis_password}
@@ -40,7 +40,7 @@ services:
   nestjs-app-prod:
     build:
       context: .
-      dockerfile: Dockerfileprod
+      dockerfile: Dockerfile.prod
     container_name: nestjs-app-prod
     restart: unless-stopped
     ports:
@@ -48,24 +48,23 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8000
-      - DB_HOST=inventory-management-db
-      - DB_PORT=5432
+      - DB_HOST=${DB_HOST:-inventory-management-db}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_NAME=${DB_NAME:-inventory-management-system-db}
       - DB_USERNAME=${DB_USERNAME:-postgres}
       - DB_PASSWORD=${DB_PASSWORD:-password}
-      - DB_SYNC=false
-      - DB_LOGGING=false
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-your_secure_redis_password}@redis:6379
+      - DB_SYNC=${DB_SYNC:-false}
+      - DB_LOGGING=${DB_LOGGING:-false}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
-      - JWT_ACCESS_TOKEN_EXPIRATION_TIME=${JWT_ACCESS_TOKEN_EXPIRATION_TIME:-15m}
+      - JWT_ACCESS_TOKEN_EXPIRES_IN=${JWT_ACCESS_TOKEN_EXPIRES_IN:-15m}
       - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
-      - JWT_REFRESH_TOKEN_EXPIRATION_TIME=${JWT_REFRESH_TOKEN_EXPIRATION_TIME:-7d}
-      - THROTTLE_TTL=${THROTTLE_TTL:-6000}
-      - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+      - JWT_REFRESH_TOKEN_EXPIRES_IN=${JWT_REFRESH_TOKEN_EXPIRES_IN:-7d}
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       redis:
         condition: service_healthy
-      inventory-management-db:-db:
+      inventory-management-db:
         condition: service_healthy
     networks:
       - app-network

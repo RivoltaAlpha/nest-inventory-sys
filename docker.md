@@ -55,13 +55,13 @@ The development setup includes:
 docker-compose up --build
 
 # Quick start my dev
-docker-compose-file up --build
+docker-compose.file up --build
 
 # Or run detached
-docker-compose-file up -d --build
+docker-compose.file up -d --build
 
 # View logs
-docker-compose-file logs -f nestjs-app
+docker-compose.file logs -f nestjs-app
 ```
 
 ## Production Mode
@@ -77,13 +77,13 @@ The production setup includes:
 
 ```powershell
 # Quick start
-docker-compose -f docker-compose-prod.yml up --build
+docker-compose -f docker-compose.prod.yml up --build
 
 # Or run detached
-docker-compose -f docker-compose-prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml up -d --build
 
 # View logs
-docker-compose -f docker-compose-prod.yml logs -f nestjs-app-prod
+docker-compose -f docker-compose.prod.yml logs -f nestjs-app.prod
 ```
 
 ## Environment Variables
@@ -103,17 +103,17 @@ Uses `.env` file with development-friendly settings.
 .\docker-helper.ps1
 
 # Stop everything
-docker-compose-file down
-docker-compose-file -f docker-compose-prod.yml down
+docker-compose.file down
+docker-compose.file -f docker-compose.prod.yml down
 
 # Clean up volumes (WARNING: This deletes data)
-docker-compose-file down -v
+docker-compose.file down -v
 
 # Rebuild without cache
-docker-compose-file build --no-cache
+docker-compose.file build --no-cache
 
 # Check status
-docker-compose-file ps
+docker-compose.file ps
 ```
 
 ## Ports
