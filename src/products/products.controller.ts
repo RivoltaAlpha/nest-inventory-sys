@@ -56,4 +56,10 @@ export class ProductsController {
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
   }
+
+  @Get('supplier/:supplierId')
+  @Roles(Role.Supplier, Role.Admin)
+  async findBySupplier(@Param('supplierId') supplierId: number) {
+  return this.productsService.findBySupplier(supplierId);
+}
 }

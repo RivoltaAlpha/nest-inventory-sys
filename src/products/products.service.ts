@@ -160,4 +160,26 @@ export class ProductsService {
       },
     });
   }
+
+  async findBySupplier(supplierId: number) {
+  return this.productsRepository.find({
+    where: { supplier: { supplier_id: supplierId } },
+    relations: ['category', 'supplier'],
+    select: {
+      product_id: true,
+      name: true,
+      price: true,
+      sku: true,
+      supplier: {
+        supplier_id: true,
+        name: true,
+        contact_info: true,
+      },
+      category: {
+        category_id: true,
+        name: true,
+      },
+    },
+  });
+}
 }
