@@ -21,13 +21,13 @@ export class WarehousesController {
   constructor(private readonly warehousesService: WarehousesService) {}
 
   @Post('create')
-  @Roles(Role.Admin) 
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse) // Only Admin and Manager roles can create a warehouse
   create(@Body() createWarehouseDto: CreateWarehouseDto) {
     return this.warehousesService.create(createWarehouseDto);
   }
 
   @Get('all')
-  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Supplier) 
+  @Roles(Role.Admin, Role.Manager, Role.Sales) 
   findAll() {
     return this.warehousesService.findAll();
   }
