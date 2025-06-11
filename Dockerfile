@@ -1,5 +1,4 @@
 # This is a simple development Dockerfile
-
 # use nodejs 20 alpine as base image
 FROM node:20-alpine
 
@@ -13,7 +12,7 @@ WORKDIR /app
 RUN mkdir -p /app/applogs
 
 # copy package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 # install dependencies
 RUN pnpm install --frozen-lockfile
