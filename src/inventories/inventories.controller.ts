@@ -27,7 +27,7 @@ export class InventoriesController {
   }
 
   @Get('all')
-  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Sales)
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse, Role.Supplier, Role.Sales)
   findAll() {
     return this.inventoriesService.findAll();
   }
