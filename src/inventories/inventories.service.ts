@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { UpdateInventoryDto } from './dto/update-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -78,5 +78,35 @@ export class InventoriesService {
     })
 
     return inventory;
+  }
+
+  async inventoryByWarehouse(warehouse_id: number) {
+    return this.inventoryRepository.find({
+      where: { warehouse: { warehouse_id } },
+      relations: ['warehouse', 'product'],
+      select: {
+        inventory_id: true,
+        stock_qty: true,
+        warehouse: {
+          warehouse_id: true,
+          location: true,
+          name: true,
+        },
+        product: {
+          name: true,
+          price: true,
+        },
+      },
+    });
+  }
+
+    // Update Product Stock
+    async updateStock(inventoryId: number, stock_qty: number):Promise<Inventory | string> {
+    const inventory = await this.inventoryRepository.findOneBy({ inventory_id: inventoryId });
+    if (!inventory) {
+      throw new NotFoundException('Inventory not found');
+    }
+    inventory.stock_qty = stock_qty;
+    return this.inventoryRepository.save(inventory);
   }
 }

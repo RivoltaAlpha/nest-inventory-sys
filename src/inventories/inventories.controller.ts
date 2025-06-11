@@ -58,4 +58,13 @@ export class InventoriesController {
   inventoryProducts(@Param('inventory_id') inventory_id: string) {
     return this.inventoriesService.inventoryProducts(+inventory_id);
   }
+
+  @Patch('update-stock/:id')
+  @Roles(Role.Admin, Role.Supplier, Role.Warehouse)
+  async updateStock(
+    @Param('id') inventoryId: number,
+    @Body('stock_qty') stock_qty: number,
+  ) {
+    return this.inventoriesService.updateStock(inventoryId, stock_qty);
+  }
 }
