@@ -4,6 +4,7 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { OrderStatus } from './entities/order.entity';
 @Injectable()
 export class OrdersService {
   constructor(
@@ -120,4 +121,31 @@ export class OrdersService {
       },
     });
   }
+async ship(id: number, updateOrderDto: UpdateOrderDto) {
+  // Update the order's status to 'Shipped' and any other fields
+  await this.ordersRepository.update(id, { ...updateOrderDto, status: OrderStatus.Shipped });
+
+  // Fetch and return the updated order with relations
+  return this.ordersRepository.findOne({
+    where: { order_id: id },
+    relations: ['user', 'products'],
+    select: {
+      order_id: true,
+      total_price: true,
+      status: true,
+      user: {
+        user_id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+      },
+      products: {
+        product_id: true,
+        name: true,
+        price: true,
+      },
+    },
+  });
 }
+}
+

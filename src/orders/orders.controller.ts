@@ -59,4 +59,9 @@ export class OrdersController {
   getStatus(@Param('Pending') Pending: string) {
     return this.ordersService.getStatus(Pending);
   }
+    @Patch('ship/:id')
+  @Roles(Role.Admin, Role.Manager, Role.Warehouse)
+  ship(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.ordersService.ship(+id, updateOrderDto);
+  }
 }
