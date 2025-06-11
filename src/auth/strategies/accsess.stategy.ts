@@ -19,7 +19,7 @@ export class AccessStrategy extends PassportStrategy(Strategy, 'access') {
     });
   }
 
-  async validate(payload: JWTPayload): Promise<JWTPayload> {
-    return { sub: payload.sub, email: payload.email, role: payload.role };
+  async validate(payload: JWTPayload): Promise<any> {
+    return { user_id: payload.sub, email: payload.email, role: payload.role };
   }
 }

@@ -71,7 +71,7 @@ export class AuthService {
       },
     );
     const refreshToken = this.jwtService.sign(
-      { id: userId, email: email, role: role },
+      { sub: userId, email: email, role: role },
       {
         secret: this.configService.getOrThrow<string>(
           'JWT_REFRESH_TOKEN_SECRET',
