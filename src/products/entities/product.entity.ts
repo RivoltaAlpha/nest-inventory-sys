@@ -62,8 +62,8 @@ export class Product {
   @ManyToOne(() => Inventory, (inventory) => inventory.product)
   inventories: Inventory[];
 
-  @OneToOne(() => Return, (returnEntity) => returnEntity.product)
-  returnEntity: Return;
+  @OneToMany(() => Return, (returnEntity) => returnEntity.product)
+  returnEntity: Return[];
 
   @OneToMany(() => Pricing, (PricingAdjustment) => PricingAdjustment.product)
   PricingAdjustment: Pricing[];

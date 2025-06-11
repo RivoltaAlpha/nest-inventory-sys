@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -29,7 +30,7 @@ export class Return {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @OneToOne(() => Product, (product) => product.returnEntity, {
+  @ManyToOne(() => Product, (product) => product.returnEntity, {
     cascade: true,
     onDelete: 'CASCADE',
   })
