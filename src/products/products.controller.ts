@@ -15,12 +15,16 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/role.decorators';
 import { Role } from 'src/users/dto/create-user.dto'; 
+import { Repository } from 'typeorm';
+import { Inventory } from 'src/inventories/entities/inventory.entity';
 
 @Controller('products')
 @ApiTags('Products') // This groups the endpoints under the 'Products' tag in Swagger documentation
 // @UseInterceptors(CacheInterceptor)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService,
+  ) {}
+
 
   @Post('create')
   @Roles(Role.Admin, Role.Manager, Role.Warehouse) 
