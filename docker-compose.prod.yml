@@ -1,31 +1,32 @@
 services:  
   inventory-management-db:
     image: postgres:15-alpine
-    container_name: prod-inventory-management-db
+    container_name: inventory-management-db-prod
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
-      POSTGRES_DB: ${DB_NAME:-inventory-management-system-db}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: inventory-management-system-db
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
       - "5432:5432"
+    volumes:
+      - inventory-management-db-data-prod:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d/migrations
     networks:
       - app-network
-    volumes: 
-      - pgdata_prod:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 30s
+      timeout: 10s
+      retries: 3
   redis:
     image: redis:8.0-alpine
     container_name: prod-redis-cache
     restart: unless-stopped
     environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD:-your_secure_redis_password}
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-your_secure_redis_password}"]
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     ports:
       - "6379:6379"
     volumes:
@@ -33,7 +34,7 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-your_secure_redis_password}", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -48,19 +49,23 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=8000
-      - DB_HOST=${DB_HOST:-inventory-management-db}
+      - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT:-5432}
       - DB_NAME=${DB_NAME:-inventory-management-system-db}
       - DB_USERNAME=${DB_USERNAME:-postgres}
-      - DB_PASSWORD=${DB_PASSWORD:-password}
+      - DB_PASSWORD=${DB_PASSWORD:-your_secure_password}
       - DB_SYNC=${DB_SYNC:-false}
       - DB_LOGGING=${DB_LOGGING:-false}
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
-      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-your_secure_redis_password}@redis:6379
+      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET:-your_access_token_secret}
       - JWT_ACCESS_TOKEN_EXPIRES_IN=${JWT_ACCESS_TOKEN_EXPIRES_IN:-15m}
-      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
+      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET:-your_refresh_token_secret}
       - JWT_REFRESH_TOKEN_EXPIRES_IN=${JWT_REFRESH_TOKEN_EXPIRES_IN:-7d}
       - DATABASE_URL=${DATABASE_URL}
+      - THROTTLE_TTL=${THROTTLE_TTL:-5m}
+      - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+    env_file:
+      - .env.prod
     depends_on:
       redis:
         condition: service_healthy
@@ -75,8 +80,8 @@ services:
       retries: 3
       
 volumes:
-  pgdata_prod:
-    name: inventory-management-system-pgdata-prod
+  inventory-management-db-data-prod:
+    name: inventory-management-db-data-prod
     driver: local
   redis-data_prod:
     name: inventory-management-system-redis-data-prod
