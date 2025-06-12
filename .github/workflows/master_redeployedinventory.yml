@@ -32,7 +32,7 @@ jobs:
       - name: run tests
         run: npm run test --if-present -- --passWithNoTests
         
-      # Zip everything except node_modules, .git, test, coverage, etc.
+      # Zip everything except .git, test, coverage, etc.
       - name: Zip artifact for deployment
         run: zip -r release.zip dist/ node_modules/ package.json package-lock.json
 
