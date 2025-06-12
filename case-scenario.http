@@ -1,0 +1,102 @@
+### 
+@url = http://localhost:8000
+
+// SALES ROLE
+//////////////////////////////////////////////////////
+@SalesToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMyLCJlbWFpbCI6InNhbGVzMUBnbWFpbC5jb20iLCJyb2xlIjoiU2FsZXMiLCJpYXQiOjE3NDk3MjI2MzUsImV4cCI6MTc0OTcyNDQzNX0.iNSnf1V2Ldyv0c8MtBI0SlK2Q7OPxIfY9zhmXlSOqZo
+### 1. Sales: Login and get token
+
+POST {{url}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "sales1@gmail.com",
+  "password": "securepassword"
+}
+
+### 2. Sales: Create Order
+POST {{url}}/orders/create
+Authorization: Bearer {{SalesToken}}
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "products": [
+    { "product_id": 45, "quantity": 2 }
+  ],
+  "total_price": 99.97,
+  "status": "Pending",
+  "shipping": "Pending"
+}
+
+###
+POST {{url}}/transactions/create
+Authorization: Bearer {{SalesToken}}
+Content-Type: application/json
+
+{
+  "product_id": 45,
+  "quantity": 2,
+  "price": 59.98,
+  "type": "Sale"
+}
+
+### 3. Manager: Login and get token
+POST {{url}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "manager1@gmail.com",
+  "password": "securepassword"
+}
+
+###
+@ManagerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjM1LCJlbWFpbCI6Im1hbmFnZXIxQGdtYWlsLmNvbSIsInJvbGUiOiJNYW5hZ2VyIiwiaWF0IjoxNzQ5NzIyNjk1LCJleHAiOjE3NDk3MjQ0OTV9.dr0HaNWr9WtpFiio32NKCBL4QPPPP6p0B1XSA8jVH4w
+
+### 4. Manager: Approve/Ship Order 
+PATCH {{url}}/orders/ship/33
+Authorization: Bearer {{ManagerToken}}
+Content-Type: application/json
+
+{
+  "status": "Shipped"
+}
+
+### 5. Warehouse: Login and get token
+POST {{url}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "warehouse@gmail.com",
+  "password": "securepassword"
+}
+
+### 6. Warehouse: Ship Order 
+@WarehouseToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjM0LCJlbWFpbCI6IndhcmVob3VzZUBnbWFpbC5jb20iLCJyb2xlIjoiV2FyZWhvdXNlIiwiaWF0IjoxNzQ5NzIyNzIyLCJleHAiOjE3NDk3MjQ1MjJ9.du9QRsWATQ6XkstA__W2524D_j_3NqrCsHJuFwZVxec
+POST {{url}}/shipping/create
+Authorization: Bearer {{WarehouseToken}}
+Content-Type: application/json
+
+{
+  "order_id": 28,
+  "tracking_number": "TRACK999",
+  "status": "Shipped",
+  "shipped_at": "2025-06-12"
+}
+
+### 7. Sales: Track Order (for user 1)
+GET {{url}}/orders/user/1
+Authorization: Bearer {{SalesToken}}
+
+### 8. Sales: Create Return (if needed)
+POST {{url}}/returns/create
+Authorization: Bearer {{SalesToken}}
+Content-Type: application/json
+
+{
+  "order_id": 28,
+  "product_id": 45,
+  "quantity": 1,
+  "return_reason": "Defective item",
+  "createdAt": "2025-06-12T10:00:00.000Z"
+}

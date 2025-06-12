@@ -16,16 +16,19 @@
 
 ---
 
-## 🔗 Entity Relationships
 
-- **User ↔ Orders**: Each order is placed by a user.
-- **Order ↔ Products**: An order can have multiple products (many-to-many).
-- **Product ↔ Category**: Each product belongs to a category.
-- **Product ↔ Supplier**: Each product has a supplier.
-- **Product ↔ Inventory ↔ Warehouse**: Inventory tracks product stock per warehouse.
-- **Order ↔ Returns**: Returns are linked to orders and products.
-- **Product ↔ Pricing**: Products can have multiple pricing entries (discounts/promotions).
-- **Product ↔ Transactions**: Transactions record sales/purchases of products.
+## **Entities & Relationships**
+
+- **User:** Has roles (Admin, Sales, Manager, Supplier, Warehouse)
+- **Category:** Product categories
+- **Product:** Belongs to a category and supplier
+- **Supplier:** Supplies products
+- **Order:** Placed by a user, contains products
+- **Inventory:** Tracks product stock in warehouses
+- **Warehouse:** Stores inventory
+- **Return:** Linked to an order (one-to-one)
+- **Pricing:** Product pricing and promotions
+- **Transaction:** Records sales, purchases, returns, adjustments
 
 ---
 
@@ -106,21 +109,18 @@ Standard create, read, update, delete operations for:
 
 ### 📥 Product Order Flow
 
-1. User logs in and receives a JWT.
-2. User creates an order via `POST /orders/create` with product IDs.
-3. Order is saved with user and product relationships.
-4. Inventory is decremented for each ordered product.
-5. Transaction is recorded.
-6. If returned, a return record is saved and inventory is incremented.
-
-### 🔁 Inventory Update
-
-- A sale or restock updates the related product's inventory quantity in the appropriate warehouse.
-
----
+1. **User (Sales) logs in** and gets a JWT token.
+2. **Sales creates an order** for products and a customer.
+3. **Order is saved** in the database and marked as "Pending."
+4. **Manager reviews and approves/ships** the order, updating its status.
+5. **Warehouse staff** see the order, prepare shipment, and update inventory.
+6. **Order is shipped** and status is updated to "Shipped" or "Completed."
+7. **If needed, a return is created** and processed, updating inventory and records.
+8. **All actions are role-restricted** and logged for auditing.
 
 
 # Roles 😎
+
 Here are the typical tasks for each role in your Inventory Management System:
 
 ---
@@ -166,17 +166,23 @@ Here are the typical tasks for each role in your Inventory Management System:
 
 ---
 
+## **API & Role-Based Access**
+
+- **Authentication:** JWT tokens issued on login, with role encoded in token.
+- **Role-based endpoints:**  
+  - **Admin:** Full access (manage users, products, suppliers, warehouses, etc.)
+  - **Sales:** View/create/update orders, view products/inventory, create returns/transactions.
+  - **Manager:** Approve/ship orders, view products/orders.
+  - **Supplier:** View/update own products and inventory, cannot view all orders.
+  - **Warehouse:** Manage inventory, view warehouse products, handle shipping.
+
+---
+
 ## 🔐 Security Overview
 
 - JWT Guards protect sensitive routes.
 - Passwords and refresh tokens are hashed.
 - Only public routes: signup, signin, refresh.
-
----
-
-## 🧾 Swagger 
-
-- Uses swagger for rich API documentation.
 
 ---
 
