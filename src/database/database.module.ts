@@ -35,7 +35,7 @@ const dbProvider = {
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: configService.getOrThrow<boolean>('DB_SYNC', true),
         logging: configService.getOrThrow<boolean>('DB_LOGGING', false),
-        ssl: { rejectUnauthorized: false },
+        // ssl: { rejectUnauthorized: false },
         // url: process.env.DATABASE_URL,
         migrations: [__dirname + '/../migrations/**/*{.ts,.js}'],
       }),

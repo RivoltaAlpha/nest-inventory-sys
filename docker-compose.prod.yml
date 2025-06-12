@@ -1,4 +1,4 @@
-services:  
+services:
   inventory-management-db:
     image: postgres:15-alpine
     container_name: inventory-management-db-prod
@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: inventory-management-system-db
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     ports:
-      - "5433:5432" #host port 5433, container port 5432
+      - "5432:5432"
     volumes:
       - inventory-management-db-data-prod:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d/migrations
@@ -20,6 +20,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
   redis:
     image: redis:8.0-alpine
     container_name: prod-redis-cache
@@ -38,6 +39,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
   nestjs-app-prod:
     build:
       context: .
@@ -50,20 +52,20 @@ services:
       - NODE_ENV=production
       - PORT=8000
       - DB_HOST=${DB_HOST}
-      - DB_PORT=5433
+      - DB_PORT=5432
       - DB_NAME=${DB_NAME:-inventory-management-system-db}
       - DB_USERNAME=${DB_USERNAME:-postgres}
       - DB_PASSWORD=${DB_PASSWORD:-your_secure_password}
       - DB_SYNC=${DB_SYNC:-false}
       - DB_LOGGING=${DB_LOGGING:-false}
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-your_secure_redis_password}@redis:6379
-      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET:-your_access_token_secret}
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-Coding123}@redis:6379
+      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET:-Coding123}
       - JWT_ACCESS_TOKEN_EXPIRES_IN=${JWT_ACCESS_TOKEN_EXPIRES_IN:-15m}
-      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET:-your_refresh_token_secret}
+      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET:-Coding123}
       - JWT_REFRESH_TOKEN_EXPIRES_IN=${JWT_REFRESH_TOKEN_EXPIRES_IN:-7d}
       - DATABASE_URL=${DATABASE_URL}
-      - THROTTLE_TTL=${THROTTLE_TTL:-5m}
-      - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+      - THROTTLER_TTL=${THROTTLER_TTL:-5m}
+      - THROTTLER_LIMIT=${THROTTLER_LIMIT:-100}
     env_file:
       - .env.prod
     depends_on:
@@ -78,7 +80,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      
+
 volumes:
   inventory-management-db-data-prod:
     name: inventory-management-db-data-prod
@@ -90,6 +92,6 @@ volumes:
     name: inventory-management-system-app-logs-prod
     driver: local
 
-networks: 
+networks:
   app-network:
     driver: bridge
