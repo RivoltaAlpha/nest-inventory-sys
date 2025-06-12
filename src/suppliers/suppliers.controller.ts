@@ -20,7 +20,7 @@ import { Role } from 'src/users/dto/create-user.dto';
 export class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}
 
-  @Post()
+  @Post('create')
   @Roles(Role.Admin, Role.Manager)
   create(@Body() createSupplierDto: CreateSupplierDto) {
     return this.suppliersService.create(createSupplierDto);

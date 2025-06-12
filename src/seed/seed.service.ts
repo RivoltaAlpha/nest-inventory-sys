@@ -211,12 +211,12 @@ export class SeedService {
 
   private async seedReturns(count: number, orders: Order[]): Promise<Return[]> {
     this.logger.log(`Seeding ${count} returns...`);
-    const returns = Array.from({ length: count }, () => {
+    // Shuffle orders and pick up to 'count' unique orders
+    const shuffledOrders = faker.helpers.shuffle(orders).slice(0, Math.min(count, orders.length));
+    const returns = shuffledOrders.map(order => {
       const returnItem = new Return();
-      returnItem.order = faker.helpers.arrayElement(orders);
-      returnItem.product = faker.helpers.arrayElement(
-        orders.flatMap((order) => order.products),
-      );
+      returnItem.order = order;
+      returnItem.product = faker.helpers.arrayElement(order.products);
       returnItem.quantity = faker.number.int({ min: 1, max: 5 });
       returnItem.return_reason = faker.commerce.productAdjective();
       return returnItem;
@@ -240,27 +240,26 @@ export class SeedService {
     });
     return this.pricingRepository.save(pricings);
   }
-  private async seedTransactions(
-    count: number,
-    orders: Order[],
-  ): Promise<Transaction[]> {
-    this.logger.log(`Seeding ${count} transactions...`);
-    const transactions = Array.from({ length: count }, () => {
-      const transaction = new Transaction();
-      transaction.product.product_id = faker.helpers.arrayElement(
-        orders.flatMap((order) => order.products),
-      ).product_id;
-      transaction.price = parseFloat(faker.commerce.price());
-      transaction.quantity = faker.number.int({ min: 1, max: 5 });
-      transaction.type = faker.helpers.arrayElement([
-        'Sale',
-        'Purchase',
-        'Return',
-        'Adjustment',
-      ]) as Transaction['type'];
-      return transaction;
-    });
-    return this.transactionRepository.save(transactions);
-  }
+ private async seedTransactions(
+  count: number,
+  orders: Order[],
+): Promise<Transaction[]> {
+  this.logger.log(`Seeding ${count} transactions...`);
+  const allProducts = orders.flatMap(order => order.products).filter(Boolean);
+  const transactions = Array.from({ length: count }, () => {
+    const transaction = new Transaction();
+    transaction.product = faker.helpers.arrayElement(allProducts);
+    transaction.price = parseFloat(faker.commerce.price());
+    transaction.quantity = faker.number.int({ min: 1, max: 5 });
+    transaction.type = faker.helpers.arrayElement([
+      'Sale',
+      'Purchase',
+      'Return',
+      'Adjustment',
+    ]) as Transaction['type'];
+    return transaction;
+  });
+  return this.transactionRepository.save(transactions);
+}
   private readonly logger = new Logger(SeedService.name);
 }

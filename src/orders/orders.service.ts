@@ -68,8 +68,15 @@ export class OrdersService {
       .getOne();
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return this.ordersRepository.update(id, updateOrderDto);
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    const order = await this.ordersRepository.findOne({ where: { order_id: id } });
+    if (!order) {
+      throw new Error(`Order with id ${id} not found`);
+    }
+
+    await this.ordersRepository.update(id, updateOrderDto);
+    
+    return this.ordersRepository.findOne({ where: { order_id: id } });
   }
 
   remove(id: number) {
