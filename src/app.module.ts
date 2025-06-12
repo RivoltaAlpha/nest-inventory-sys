@@ -78,7 +78,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     //   },
     // }),
   ],
-  controllers: [AppController, CacheMetricsController],
+  controllers: [AppController],
   providers: [
     {
       provide: 'APP_INTERCEPTOR',
