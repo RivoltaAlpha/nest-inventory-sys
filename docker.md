@@ -54,6 +54,9 @@ The development setup includes:
 # Quick start Redis only
 docker-compose up --build
 
+# start dev envt 
+docker compose -f docker-compose.file.yml up -d --build
+
 # Quick start my dev
 docker-compose.file up --build
 
@@ -80,7 +83,7 @@ The production setup includes:
 docker-compose -f docker-compose.prod.yml up --build
 
 # Or run detached
-docker-compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker-compose.prod.yml up -d --build
 
 # View logs
 docker-compose -f docker-compose.prod.yml logs -f nestjs-app.prod
@@ -104,6 +107,7 @@ Uses `.env` file with development-friendly settings.
 
 # Stop everything
 docker-compose.file down
+docker compose -f docker-compose.file.yml down
 docker-compose.file -f docker-compose.prod.yml down
 
 # Clean up volumes (WARNING: This deletes data)
@@ -114,11 +118,18 @@ docker-compose.file build --no-cache
 
 # Check status
 docker-compose.file ps
+
+#clean up
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.dev.yml down
+
+# check running containers 
+docker ps
 ```
 
 ## Ports
 
-- **Development**: `http://localhost:8000`
+- **Dev**: `http://localhost:8000`
 - **Production**: `http://localhost:80` (mapped to container port 8000)
 - **Database**: `localhost:5432`
 - **Redis**: `localhost:6379`

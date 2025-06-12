@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 // Load Environment Variables
 config({
-  path: ['.env', '.env.production', '.env.local'],
+  path: ['.env', '.env.prod', '.env.local'],
 });
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -36,7 +36,7 @@ const dbProvider = {
         synchronize: configService.getOrThrow<boolean>('DB_SYNC', true),
         logging: configService.getOrThrow<boolean>('DB_LOGGING', false),
         ssl: { rejectUnauthorized: false },
-        url: process.env.DATABASE_URL,
+        // url: process.env.DATABASE_URL,
         migrations: [__dirname + '/../migrations/**/*{.ts,.js}'],
       }),
       inject: [ConfigService], // Inject ConfigService to access configuration values
