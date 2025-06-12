@@ -17,16 +17,11 @@ import { LoggerMiddleware } from './logger.middleware';
 import { LogsModule } from './logs/logs.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
-// import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
-// import { CacheableMemory} from 'cacheable';
-// import { createKeyv, Keyv } from '@keyv/redis';
-// import { CacheMetricsController } from './cache/metrics.controller';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './auth/guards/at.guards';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { User } from './users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -50,40 +45,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // ThrottlerModule.forRootAsync({ //  protect applications from brute-force attacks thru rate-limiting.
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) => ({
-    //     ttl: configService.get<number>('THROTTLER_TTL') ?? 60,
-    //     limit: configService.get<number>('THROTTLER_LIMIT') ?? 10,
-    //   }),
-    // }),
-    // CacheModule.registerAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   isGlobal: true, // Make cache globally available
-    //   useFactory: (configService: ConfigService) => {
-    //     return {
-    //       ttl: 60000, // Default TTL for cache entries
-    //       stores: [
-    //         createKeyv(configService.getOrThrow<string>('REDIS_URL')),
-
-    //         // Using CacheableMemory for in-memory caching
-    //         new Keyv({
-    //           store: new CacheableMemory({ ttl: 30000, lruSize: 5000 }),
-    //         }),
-    //       ],
-    //       logger: true, // Enable logging for cache operations
-    //     };
-    //   },
-    // }),
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide: 'APP_INTERCEPTOR',
-      useClass: CacheInterceptor, // Global cache interceptor
-    },
     {
       provide: APP_GUARD,
       useClass: AtGuard, // Global access token guard
@@ -92,10 +56,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     provide: APP_GUARD,
     useClass: RolesGuard,
   },
-  // {
-  //   provide: APP_GUARD,
-  //   useClass: ThrottlerGuard
-  // },
   ],
 })
 export class AppModule implements NestModule {
